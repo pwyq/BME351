@@ -10,16 +10,6 @@ package state_pkg is
 	constant S1 : state_ty := "010";
 	constant S2 : state_ty := "100";
 
-	subtype direction_ty   is std_logic_vector(2 downto 0);
-	constant dir_ne : direction_ty := "110";  -- northeast
-	constant dir_sw : direction_ty := "111";  -- southwest
-	constant dir_n  : direction_ty := "010";  -- north
-	constant dir_s  : direction_ty := "011";  -- south
-	constant dir_e  : direction_ty := "000";  -- east
-	constant dir_w  : direction_ty := "001";  -- west
-	constant dir_nw : direction_ty := "100";  -- northwest
-	constant dir_se : direction_ty := "101";  -- southeast
-
 	----------- Structures -----------
 	subtype o_mem_data is std_logic_vector(7 downto 0);
 		type o_mem_vec is array(natural range <>) of o_mem_data;
@@ -27,12 +17,12 @@ package state_pkg is
 	type maxOneStruct is record
 		val : std_logic_vector(7 downto 0);
 		dir : std_logic_vector(2 downto 0);
-	end record
+	end record;
 
 	type maxTwoStruct is record
-		val : std_logic_vector(10 downto 0);
+		val : unsigned(10 downto 0);
 		dir : std_logic_vector(2 downto 0);
-	end record
+	end record;
 end state_pkg;
 
 library ieee;
@@ -59,7 +49,7 @@ end entity;
 
 architecture main of kirsch is
 	----------- Functions -----------
-	function maxOperator1 (p1_val, p2_val, p1_dir, p2_dir : std_logic_vector)
+	function maxOperator1 (p1_val, p1_dir, p2_val, p2_dir : std_logic_vector)
 		return maxOneStruct is variable pMax : maxOneStruct;
 	begin
 		if (p1_val > p2_val) then
@@ -73,8 +63,8 @@ architecture main of kirsch is
 		return pMax;
 	end maxOperator1;
 
-	function maxOperator2 (p1_val, p2_val, p1_dir, p2_dir : std_logic_vector)
-		return maxOneStruct is variable pMax : maxOneStruct;
+	function maxOperator2 (p1_val, p1_dir, p2_val, p2_dir : std_logic_vector)
+		return maxTwoStruct is variable pMax : maxTwoStruct;
 	begin
 		if (p1_val > p2_val) then
 			-- `:=` variable assign
@@ -109,23 +99,20 @@ architecture main of kirsch is
 
 	-------- Stage 2 Signals --------
 	signal add2 : std_logic_vector(10 downto 0);
-	signal reg3 : std_logic_vector(10 downto 0);	-- to max2, r5
+	signal reg3 : maxTwoStruct;
 
 	signal add3 : std_logic_vector(12 downto 0);
 	signal reg4 : std_logic_vector(12 downto 0);
 
 	-------- Stage 3 Signals --------
-	-- signal reg5
-	-- max2, shift1
-	signal reg5 : std_logic_vector(10 downto 0);
+	signal reg5 : maxTwoStruct;
 	signal max2 : maxTwoStruct;
 
 	-------- Stage 4 Signals --------
-	signal reg6 : std_logic_vector(10 downto 0);
-	signal reg7 : std_logic_vector(12 downto 0);
-	-- add4, shift2
-	-- sub1
-	-- comp1
+	signal reg6 : maxTwoStruct;
+	signal reg7 : signed(12 downto 0);
+	signal add4 : std_logic_vector(12 downto 0);
+	signal sub1 : signed(12 downto 0);
 	
 begin
 -- --------------------------------
@@ -205,7 +192,7 @@ begin
 	updateCycles : process begin
 		wait until rising_edge(clk);
 		if (i_valid = '1') then
-			cycles(6 downto 0) <= "00000000"
+			cycles(6 downto 0) <= "0000000";
 		else
 			cycles(0) <= isComputable and i_valid;
 			cycles(6 downto 1) <= cycles(5 downto 0);	-- new data coming in, moves cycles downwards
@@ -229,22 +216,24 @@ begin
 
 	updateStageOne : process begin
 		wait until rising_edge(clk);
-		reg1.val <= resize(max1, 11);
+		reg1.val <= max1.val;
 		reg1.dir <= max1.dir;
 		
-		reg2 <= add1;
+		reg2 <= resize(add1, 10);
 	end process;
 
 -- --------------------------------
 -- Stage 2
 -- --------------------------------
-	add2 <= resize(reg1.val, 10) + resize(reg2);
+	add2 <= resize(reg1.val, 10) + reg2;
 	updateAddTwoOutput : process begin
 		wait until rising_edge(clk);
 		if (cycles(4) = '1') then
-			reg6 <= add2;
+			reg6.val <= add2;
+			reg6.dir <= reg1.dir;
 		else
-			reg3 <= add2;
+			reg3.val <= add2;
+			reg3.dir <= reg1.dir;
 		end if;
 	end process;
 
@@ -254,9 +243,9 @@ begin
 		add3 <= resize(reg2, 12) + resize(reg4, 12);
 		
 		if (cycles(1) = '1') then
-			reg4 <= resize(reg2, 12)
+			reg4 <= resize(reg2, 12);
 		elsif (cycles(4) = '1') then
-			reg7 <= add3;
+			reg7 <= signed(add3);
 		else
 			reg4 <= add3;
 		end if; 
@@ -265,4 +254,52 @@ begin
 -- --------------------------------
 -- Stage 3
 -- --------------------------------
+	max2 <= maxOperator2(reg3.val, reg3.dir, reg5.val, reg5.dir) when 
+			cycles(3) = '1' or cycles(4) = '1' or cycles(5) = '1' else 
+			maxOperator2("0000000000", "000", "0000000000", "000");
+	updateStageThree : process begin
+		wait until rising_edge(clk);
+		if (cycles(3) = '1') then
+			reg5.val <= reg3.val;
+			reg5.dir <= reg3.dir;
+		else
+			reg5.val <= max2.val;
+			reg5.dir <= max2.dir;
+		end if;
+
+		if (cycles(5) = '1') then
+			reg5.val <= shift_left(max2.val, 3);	-- shift1 operator
+			reg5.dir <= max2.dir;
+		end if;
+	end process;
+
+-- --------------------------------
+-- Stage 4
+-- --------------------------------
+
+	add4 <= resize(std_logic_vector(reg7),12) + resize(shift_left(std_logic_vector(reg7),1), 12);
+	updateStageFour : process begin
+		wait until rising_edge(clk);
+		
+		if (cycles(7) = '0') then
+			o_valid <= '0';
+			o_dir <= "000";
+		end if;
+
+		if (cycles(5) = '1') then
+			reg6.val <= add4;
+		elsif (cycles(6) = '1') then
+			reg7 <= signed(resize(reg5.val, 12)) - signed(resize(reg6.val,12));
+		elsif (cycles(7) = '1') then
+			if (reg7 > 383) then
+				o_dir <= reg5.dir;
+				o_edge <= '1';
+			else
+				o_dir <= "000";
+				o_edge <= '0';
+			end if;
+			o_valid <= '1';
+		end if;
+	end process;
+
 end architecture;
