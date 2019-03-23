@@ -28,6 +28,11 @@ package state_pkg is
 		val : std_logic_vector(7 downto 0);
 		dir : std_logic_vector(2 downto 0);
 	end record
+
+	type maxTwoStruct is record
+		val : std_logic_vector(10 downto 0);
+		dir : std_logic_vector(2 downto 0);
+	end record
 end state_pkg;
 
 library ieee;
@@ -68,6 +73,20 @@ architecture main of kirsch is
 		return pMax;
 	end maxOperator1;
 
+	function maxOperator2 (p1_val, p2_val, p1_dir, p2_dir : std_logic_vector)
+		return maxOneStruct is variable pMax : maxOneStruct;
+	begin
+		if (p1_val > p2_val) then
+			-- `:=` variable assign
+			pMax.val := p1_val;
+			pMax.dir := p1_dir;
+		else
+			pMax.val := p2_val;
+			pMax.dir := p2_dir;
+		end if;
+		return pMax;
+	end maxOperator2;
+
 	-------- General Signals --------
 	signal o_mems 		: o_mem_vec(2 downto 0);
 	signal row_state 	: state_ty;
@@ -82,26 +101,28 @@ architecture main of kirsch is
 	signal cycles	: std_logic_vector(6 downto 0);
 
 	-------- Stage 1 Signals --------
-	signal add1		  : unsigned(8 downto 0);
-	signal max1		  : maxOneStruct;
+	signal add1	: unsigned(8 downto 0);
 	signal reg1 : maxOneStruct;						-- to add2
+
+	signal max1	: maxOneStruct;
 	signal reg2 : std_logic_vector(9 downto 0);		-- to add2, add3
-	-- max1, add1
-	-- i1,i2,i3,i4
 
 	-------- Stage 2 Signals --------
 	signal add2 : std_logic_vector(10 downto 0);
-	signal add3 : std_logic_vector(12 downto 0);
 	signal reg3 : std_logic_vector(10 downto 0);	-- to max2, r5
-	-- signal reg3, reg4 : std_logic_vector(10??????? downto 0);
-	-- add2, add3
+
+	signal add3 : std_logic_vector(12 downto 0);
+	signal reg4 : std_logic_vector(12 downto 0);
 
 	-------- Stage 3 Signals --------
 	-- signal reg5
 	-- max2, shift1
+	signal reg5 : std_logic_vector(10 downto 0);
+	signal max2 : maxTwoStruct;
 
 	-------- Stage 4 Signals --------
-	-- signal reg6, reg7
+	signal reg6 : std_logic_vector(10 downto 0);
+	signal reg7 : std_logic_vector(12 downto 0);
 	-- add4, shift2
 	-- sub1
 	-- comp1
@@ -217,8 +238,31 @@ begin
 -- --------------------------------
 -- Stage 2
 -- --------------------------------
-	updateStageTwo : process begin
+	add2 <= resize(reg1.val, 10) + resize(reg2);
+	updateAddTwoOutput : process begin
 		wait until rising_edge(clk);
-
+		if (cycles(4) = '1') then
+			reg6 <= add2;
+		else
+			reg3 <= add2;
+		end if;
 	end process;
+
+	updateAddThreeOutput : process begin
+		wait until rising_edge(clk);
+		
+		add3 <= resize(reg2, 12) + resize(reg4, 12);
+		
+		if (cycles(1) = '1') then
+			reg4 <= resize(reg2, 12)
+		elsif (cycles(4) = '1') then
+			reg7 <= add3;
+		else
+			reg4 <= add3;
+		end if; 
+	end process;
+
+-- --------------------------------
+-- Stage 3
+-- --------------------------------
 end architecture;
