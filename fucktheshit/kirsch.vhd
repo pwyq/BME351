@@ -63,7 +63,7 @@ architecture main of kirsch is
 		return pMax;
 	end maxOperator1;
 
-	function maxOperator2 (p1_val, p1_dir, p2_val, p2_dir : std_logic_vector)
+	function maxOperator2 (p1_val : unsigned; p1_dir : std_logic_vector; p2_val : unsigned; p2_dir : std_logic_vector)
 		return maxTwoStruct is variable pMax : maxTwoStruct;
 	begin
 		if (p1_val > p2_val) then
@@ -88,21 +88,21 @@ architecture main of kirsch is
 
 	signal on_stage1, on_stage2, on_stage3 : std_logic;
 	signal isComputable : std_logic;
-	signal cycles	: std_logic_vector(6 downto 0);
+	signal cycles	: std_logic_vector(7 downto 0);
 
 	-------- Stage 1 Signals --------
 	signal add1	: unsigned(8 downto 0);
-	signal reg1 : maxOneStruct;						-- to add2
+	signal reg1 : maxOneStruct;
 
 	signal max1	: maxOneStruct;
-	signal reg2 : std_logic_vector(9 downto 0);		-- to add2, add3
+	signal reg2 : std_logic_vector(9 downto 0);	
 
 	-------- Stage 2 Signals --------
-	signal add2 : std_logic_vector(10 downto 0);
+	signal add2 : unsigned(10 downto 0);
 	signal reg3 : maxTwoStruct;
 
-	signal add3 : std_logic_vector(12 downto 0);
-	signal reg4 : std_logic_vector(12 downto 0);
+	signal add3 : unsigned(12 downto 0);
+	signal reg4 : unsigned(12 downto 0);
 
 	-------- Stage 3 Signals --------
 	signal reg5 : maxTwoStruct;
@@ -111,7 +111,7 @@ architecture main of kirsch is
 	-------- Stage 4 Signals --------
 	signal reg6 : maxTwoStruct;
 	signal reg7 : signed(12 downto 0);
-	signal add4 : std_logic_vector(12 downto 0);
+	signal add4 : signed(12 downto 0);
 	signal sub1 : signed(12 downto 0);
 	
 begin
@@ -192,10 +192,10 @@ begin
 	updateCycles : process begin
 		wait until rising_edge(clk);
 		if (i_valid = '1') then
-			cycles(6 downto 0) <= "0000000";
+			cycles(7 downto 0) <= "00000000";
 		else
 			cycles(0) <= isComputable and i_valid;
-			cycles(6 downto 1) <= cycles(5 downto 0);	-- new data coming in, moves cycles downwards
+			cycles(7 downto 1) <= cycles(6 downto 0);	-- new data coming in, moves cycles downwards
 		end if;
 	end process;
 -- --------------------------------
@@ -219,13 +219,14 @@ begin
 		reg1.val <= max1.val;
 		reg1.dir <= max1.dir;
 		
-		reg2 <= resize(add1, 10);
+		reg2 <= std_logic_vector(resize(add1, 10));
 	end process;
 
 -- --------------------------------
 -- Stage 2
 -- --------------------------------
-	add2 <= resize(reg1.val, 10) + reg2;
+
+	add2 <= resize(unsigned(reg1.val) + unsigned(reg2), 11);
 	updateAddTwoOutput : process begin
 		wait until rising_edge(clk);
 		if (cycles(4) = '1') then
@@ -240,10 +241,10 @@ begin
 	updateAddThreeOutput : process begin
 		wait until rising_edge(clk);
 		
-		add3 <= resize(reg2, 12) + resize(reg4, 12);
+		add3 <= resize(unsigned(reg2), 12) + resize(reg4, 12);
 		
 		if (cycles(1) = '1') then
-			reg4 <= resize(reg2, 12);
+			reg4 <= resize(unsigned(reg2), 12);
 		elsif (cycles(4) = '1') then
 			reg7 <= signed(add3);
 		else
@@ -277,7 +278,7 @@ begin
 -- Stage 4
 -- --------------------------------
 
-	add4 <= resize(std_logic_vector(reg7),12) + resize(shift_left(std_logic_vector(reg7),1), 12);
+	add4 <= resize(reg7,12) + resize(shift_left(reg7,1), 12);
 	updateStageFour : process begin
 		wait until rising_edge(clk);
 		
@@ -287,7 +288,7 @@ begin
 		end if;
 
 		if (cycles(5) = '1') then
-			reg6.val <= add4;
+			reg6.val <= unsigned(add4);
 		elsif (cycles(6) = '1') then
 			reg7 <= signed(resize(reg5.val, 12)) - signed(resize(reg6.val,12));
 		elsif (cycles(7) = '1') then
