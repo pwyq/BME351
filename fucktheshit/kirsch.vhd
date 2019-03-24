@@ -14,13 +14,21 @@ package state_pkg is
 	subtype o_mem_data is std_logic_vector(7 downto 0);
 		type o_mem_vec is array(natural range <>) of o_mem_data;
 
+	-- used for max1 (8-bit)
 	type maxOneStruct is record
 		val : std_logic_vector(7 downto 0);
 		dir : std_logic_vector(2 downto 0);
 	end record;
 
+	-- used for reg2 (10-bit), max2 (10-bit)
 	type maxTwoStruct is record
-		val : unsigned(10 downto 0);
+		val : unsigned(9 downto 0);
+		dir : std_logic_vector(2 downto 0);
+	end record;
+
+	-- used for reg5 (13-bit), reg6 (14-bit)
+	type regStruct is record
+		val : unsigned(13 downto 0);
 		dir : std_logic_vector(2 downto 0);
 	end record;
 end state_pkg;
@@ -46,7 +54,6 @@ entity kirsch is
 		o_col      : out unsigned(7 downto 0)	-- col number of the input image
 	);  
 end entity;
-
 architecture main of kirsch is
 	----------- Functions -----------
 	function maxOperator1 (p1_val, p1_dir, p2_val, p2_dir : std_logic_vector)
@@ -91,28 +98,31 @@ architecture main of kirsch is
 	signal cycles	: std_logic_vector(7 downto 0);
 
 	-------- Stage 1 Signals --------
-	signal add1	: unsigned(8 downto 0);
-	signal reg1 : maxOneStruct;
+	signal add1	: unsigned(8 downto 0); -- 8 downto 0
+	signal reg1 : maxOneStruct; -- 7 downto 0
 
-	signal max1	: maxOneStruct;
-	signal reg2 : std_logic_vector(9 downto 0);	
+	signal max1	: maxOneStruct;	-- 7 downto 0
+	signal reg2 : std_logic_vector(8 downto 0);	-- 8 downto 0
 
 	-------- Stage 2 Signals --------
-	signal add2 : unsigned(10 downto 0);
-	signal reg3 : maxTwoStruct;
+	signal add2 : unsigned(9 downto 0); -- 9 downto 0
+	signal reg3 : maxTwoStruct;	-- 9 downto 0
 
-	signal add3 : unsigned(12 downto 0);
-	signal reg4 : unsigned(12 downto 0);
+	signal add3 : unsigned(11 downto 0); -- 11 downto 0
+	signal reg4 : unsigned(11 downto 0); -- 11 downto 0
 
 	-------- Stage 3 Signals --------
-	signal reg5 : maxTwoStruct;
-	signal max2 : maxTwoStruct;
+	signal reg5 : maxTwoStruct;	-- 12 downto 0 (regStruct is 13 downto 0)
+	signal max2 : maxTwoStruct;	-- 9 downto 0
 
 	-------- Stage 4 Signals --------
-	signal reg6 : maxTwoStruct;
-	signal reg7 : signed(12 downto 0);
-	signal add4 : signed(12 downto 0);
-	signal sub1 : signed(12 downto 0);
+	signal reg6 : maxTwoStruct;	-- 13 downto 0
+	signal reg7 : signed(16 downto 0);-- 11 downto 0
+	signal add4 : signed(16 downto 0);-- 13 downto 0
+	signal sub1 : signed(16 downto 0);-- 13 downto 0
+
+	signal validEdge : std_logic;
+	signal resultDir : direction_ty;
 	
 begin
 -- --------------------------------
@@ -121,7 +131,7 @@ begin
 	o_row <= unsigned(row_counter);
 	o_col <= unsigned(col_counter);
 	o_mode(1) <= not reset;
-	o_mode(0) <= reset or on_stage1;
+	o_mode(0) <= reset or on_stage1 or on_stage2 or on_stage3;
 	isComputable <= '1' when (row_counter >= to_unsigned(2, 8) and col_counter >= to_unsigned(2, 8)) else '0';
 
 	MEMS : for i in 0 to 2 generate
@@ -205,34 +215,46 @@ begin
 			resize(unsigned(b), 9) + resize(unsigned(c), 9) when cycles(1) else
 			resize(unsigned(d), 9) + resize(unsigned(e), 9) when cycles(2) else
 			resize(unsigned(f), 9) + resize(unsigned(g), 9) when cycles(3) else
+			-- add1;
 			to_unsigned(0, 9);
+			-- should be fine
+
 
 	-- according to priority list
 	max1 <= maxOperator1(g, dir_w, b, dir_nw) when cycles(0) else
 			maxOperator1(a, dir_n, d, dir_ne) when cycles(1) else
 			maxOperator1(c, dir_e, f, dir_se) when cycles(2) else
 			maxOperator1(e, dir_s, h, dir_sw) when cycles(3) else
-			maxOperator1("00000000", "000", "00000000", "000");
+			max1;
+			--maxOperator1("00000000", "000", "00000000", "000");
 
 	updateStageOne : process begin
 		wait until rising_edge(clk);
-		reg1.val <= max1.val;
-		reg1.dir <= max1.dir;
-		
-		reg2 <= std_logic_vector(resize(add1, 10));
+		if (cycles(0) = '1' or cycles(1) = '1' or cycles(2) = '1' or cycles(3) = '1' ) then
+			reg1.val <= max1.val;
+			reg1.dir <= max1.dir;
+			reg2 <= std_logic_vector( add1); --complain here maybe 
+		end if;
 	end process;
 
 -- --------------------------------
 -- Stage 2
 -- --------------------------------
 
-	add2 <= resize(unsigned(reg1.val) + unsigned(reg2), 11);
+	-- add2 is unsigned(9 downto 0)
+	-- add3 is unsigned(11 downto 0)
+	add2 <= resize(unsigned(reg1.val) + unsigned(reg2), 10); -- std 7 and std 9 -- fix size
+	add3 <= resize(unsigned(reg2), 12) + resize(reg4, 12);
+
 	updateAddTwoOutput : process begin
 		wait until rising_edge(clk);
 		if (cycles(4) = '1') then
+		-- reg6 unsigned(9 down to 0)
 			reg6.val <= add2;
 			reg6.dir <= reg1.dir;
 		else
+		-- reg3 unsigned(9 downto 0)
+		-- add2 is unsigned(9 downto 0)
 			reg3.val <= add2;
 			reg3.dir <= reg1.dir;
 		end if;
@@ -241,44 +263,62 @@ begin
 	updateAddThreeOutput : process begin
 		wait until rising_edge(clk);
 		
-		add3 <= resize(unsigned(reg2), 12) + resize(reg4, 12);
-		
+		-- reg4  unsigned(11 downto 0)
+		-- reg7 signed(16 downto 0)
 		if (cycles(1) = '1') then
-			reg4 <= resize(unsigned(reg2), 12);
+			reg4 <= resize(unsigned(reg2),12);
 		elsif (cycles(4) = '1') then
-			reg7 <= signed(add3);
+			reg7 <= "00000" & signed(add3);
 		else
 			reg4 <= add3;
-		end if; 
+		end if;
+		on_stage2 <= on_stage1;
 	end process;
 
 -- --------------------------------
 -- Stage 3
 -- --------------------------------
-	max2 <= maxOperator2(reg3.val, reg3.dir, reg5.val, reg5.dir) when 
-			cycles(3) = '1' or cycles(4) = '1' or cycles(5) = '1' else 
-			maxOperator2("0000000000", "000", "0000000000", "000");
+	-- reg3.val unsigned(9 downto 0);
+	-- reg5.val unsigned(9 downto 0);
+	-- reg6/val unsigned(9 downto 0);
+	-- max2 unsigned(9 downto 0);
+
+			
+			-- when 
+			-- cycles(3) = '1' or cycles(4) = '1' or cycles(5) = '1' else 
+			-- max2;
+			--maxOperator2("0000000000", "000", "0000000000", "000");
 	updateStageThree : process begin
 		wait until rising_edge(clk);
-		if (cycles(3) = '1') then
+		if (cycles(2) = '1') then
 			reg5.val <= reg3.val;
 			reg5.dir <= reg3.dir;
-		else
+		elsif (cycles(3) = '1' or cycles(4) = '1') then
+			max2 <= maxOperator2(reg3.val, reg3.dir, reg5.val, reg5.dir); 
 			reg5.val <= max2.val;
 			reg5.dir <= max2.dir;
+		elsif (cycles(5) = '1') then
+			max2 <= maxOperator2(reg6.val, reg6.dir, reg5.val, reg5.dir);
+			reg5.val <= max2.val;
+			reg5.dir <= max2.dir; 
 		end if;
 
-		if (cycles(5) = '1') then
-			reg5.val <= shift_left(max2.val, 3);	-- shift1 operator
-			reg5.dir <= max2.dir;
-		end if;
+		-- if (cycles(5) = '1') then
+		-- 	reg5.val <= max2.val; --shift_left(max2.val, 3);	-- shift1 operator
+		-- 	reg5.dir <= max2.dir;
+		-- end if;
+		on_stage3 <= on_stage2;
 	end process;
 
 -- --------------------------------
 -- Stage 4
 -- --------------------------------
 
-	add4 <= resize(reg7,12) + resize(shift_left(reg7,1), 12);
+	-- we need to resize this stage appropriately 
+	-- add4 signed(16 downto 0)
+	-- reg7 signed(16 downto 0)
+
+
 	updateStageFour : process begin
 		wait until rising_edge(clk);
 		
@@ -288,19 +328,30 @@ begin
 		end if;
 
 		if (cycles(5) = '1') then
-			reg6.val <= unsigned(add4);
+			add4 <= reg7 + shift_left(reg7,1);
+			reg7 <= add4;
 		elsif (cycles(6) = '1') then
-			reg7 <= signed(resize(reg5.val, 12)) - signed(resize(reg6.val,12));
+			sub1 <= signed(resize(reg5.val, 16)) - reg7;
+			reg7 <= sub1;
+
 		elsif (cycles(7) = '1') then
 			if (reg7 > 383) then
-				o_dir <= reg5.dir;
-				o_edge <= '1';
+				-- o_dir <= reg5.dir;
+				-- o_edge <= '1';
+				validEdge <= '1';
+				resultDir <= reg5.dir;
 			else
-				o_dir <= "000";
-				o_edge <= '0';
+				-- o_dir <= "000";
+				-- o_edge <= '0';
+				validEdge <= '0';
+				resultDir <= "000";
 			end if;
 			o_valid <= '1';
 		end if;
 	end process;
+
+	o_valid <= cycles(7);
+	o_edge <= validEdge;
+	o_dir <= resultDir;
 
 end architecture;
