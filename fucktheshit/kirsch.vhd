@@ -201,7 +201,7 @@ begin
 
 	updateCycles : process begin
 		wait until rising_edge(clk);
-		if (i_valid = '1') then
+		if (reset = '1') then
 			cycles(7 downto 0) <= "00000000";
 		else
 			cycles(0) <= isComputable and i_valid;
@@ -225,15 +225,15 @@ begin
 			maxOperator1(a, dir_n, d, dir_ne) when cycles(1) else
 			maxOperator1(c, dir_e, f, dir_se) when cycles(2) else
 			maxOperator1(e, dir_s, h, dir_sw) when cycles(3) else
-			max1;
-			--maxOperator1("00000000", "000", "00000000", "000");
+			-- max1;
+			maxOperator1("00000000", "000", "00000000", "000");
 
 	updateStageOne : process begin
 		wait until rising_edge(clk);
 		if (cycles(0) = '1' or cycles(1) = '1' or cycles(2) = '1' or cycles(3) = '1' ) then
 			reg1.val <= max1.val;
 			reg1.dir <= max1.dir;
-			reg2 <= std_logic_vector( add1); --complain here maybe 
+			reg2 <= std_logic_vector(add1); --complain here maybe 
 		end if;
 	end process;
 
@@ -288,17 +288,20 @@ begin
 			-- cycles(3) = '1' or cycles(4) = '1' or cycles(5) = '1' else 
 			-- max2;
 			--maxOperator2("0000000000", "000", "0000000000", "000");
+	max2 <= maxOperator2(reg3.val, reg3.dir, reg5.val, reg5.dir) when cycles(3) = '1' or cycles(4) = '1' else
+			maxOperator2(reg6.val, reg6.dir, reg5.val, reg5.dir) when cycles(5) = '1' else
+			maxOperator2("0000000000", "000", "0000000000", "000"); 
 	updateStageThree : process begin
 		wait until rising_edge(clk);
 		if (cycles(2) = '1') then
 			reg5.val <= reg3.val;
 			reg5.dir <= reg3.dir;
 		elsif (cycles(3) = '1' or cycles(4) = '1') then
-			max2 <= maxOperator2(reg3.val, reg3.dir, reg5.val, reg5.dir); 
+			-- max2 <= maxOperator2(reg3.val, reg3.dir, reg5.val, reg5.dir); 
 			reg5.val <= max2.val;
 			reg5.dir <= max2.dir;
 		elsif (cycles(5) = '1') then
-			max2 <= maxOperator2(reg6.val, reg6.dir, reg5.val, reg5.dir);
+			-- max2 <= maxOperator2(reg6.val, reg6.dir, reg5.val, reg5.dir);
 			reg5.val <= max2.val;
 			reg5.dir <= max2.dir; 
 		end if;
@@ -317,23 +320,26 @@ begin
 	-- we need to resize this stage appropriately 
 	-- add4 signed(16 downto 0)
 	-- reg7 signed(16 downto 0)
-
-
+	-- add4 <= reg7 + shift_left(reg7,1);
+	-- sub1 <= signed(shift_left(resize(reg5.val, 16)),3) - reg7;
 	updateStageFour : process begin
 		wait until rising_edge(clk);
 		
-		if (cycles(7) = '0') then
-			o_valid <= '0';
-			o_dir <= "000";
-		end if;
+		-- if (cycles(7) = '0') then
+		-- 	o_valid <= '0';
+		-- 	o_dir <= "000";
+		-- end if;
 
 		if (cycles(5) = '1') then
+			-- add4 <= reg7 + shift_left(reg7,1);
 			add4 <= reg7 + shift_left(reg7,1);
 			reg7 <= add4;
+			-- reg7 <= reg7 + shift_left(reg7,1);
 		elsif (cycles(6) = '1') then
+			-- sub1 <= signed(resize(reg5.val, 16)) - reg7;
 			sub1 <= signed(resize(reg5.val, 16)) - reg7;
 			reg7 <= sub1;
-
+			-- reg7 <= signed(resize(reg5.val, 16)) - reg7;
 		elsif (cycles(7) = '1') then
 			if (reg7 > 383) then
 				-- o_dir <= reg5.dir;
@@ -346,7 +352,7 @@ begin
 				validEdge <= '0';
 				resultDir <= "000";
 			end if;
-			o_valid <= '1';
+			-- o_valid <= '1';
 		end if;
 	end process;
 
