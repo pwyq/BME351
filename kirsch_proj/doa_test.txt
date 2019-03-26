@@ -1,1 +1,1 @@
-SUMMARY: basic DOA functionality test FAIL
+SUMMARY: basic DOA functionality test PASS

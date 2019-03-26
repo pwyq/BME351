@@ -28,7 +28,7 @@ package state_pkg is
 
 	-- used for reg5 (13-bit), reg6 (14-bit)
 	type regStruct is record
-		val : unsigned(13 downto 0);
+		val : signed(16 downto 0);
 		dir : std_logic_vector(2 downto 0);
 	end record;
 end state_pkg;
@@ -120,6 +120,7 @@ architecture main of kirsch is
 	signal reg7 : signed(16 downto 0);-- 11 downto 0
 	signal add4 : signed(16 downto 0);-- 13 downto 0
 	signal sub1 : signed(16 downto 0);-- 13 downto 0
+	signal reg8 : regStruct;	-- TODO: temporary register to fix the stage 4 problem; get rid of this if possible
 
 	signal validEdge : std_logic;
 	signal resultDir : direction_ty;
@@ -318,43 +319,24 @@ begin
 -- --------------------------------
 
 	-- we need to resize this stage appropriately 
-	-- add4 signed(16 downto 0)
-	-- reg7 signed(16 downto 0)
-	-- add4 <= reg7 + shift_left(reg7,1);
-	-- sub1 <= signed(shift_left(resize(reg5.val, 16)),3) - reg7;
 	updateStageFour : process begin
 		wait until rising_edge(clk);
 		
-		-- if (cycles(7) = '0') then
-		-- 	o_valid <= '0';
-		-- 	o_dir <= "000";
-		-- end if;
-
 		add4 <= reg7 + shift_left(reg7,1);
 		sub1 <= signed(shift_left(resize(reg5.val, 16), 3)) - reg7;
 		if (cycles(5) = '1') then
-			-- add4 <= reg7 + shift_left(reg7,1);
-			-- add4 <= reg7 + shift_left(reg7,1);
-			reg7 <= add4;
-			-- reg7 <= reg7 + shift_left(reg7,1);
+			reg8.val <= add4;
+			reg8.dir <= reg5.dir;
 		elsif (cycles(6) = '1') then
-			-- sub1 <= signed(resize(reg5.val, 16)) - reg7;
-			-- sub1 <= signed(shift_left(resize(reg5.val, 16), 3)) - reg7;
-			reg7 <= sub1;
-			-- reg7 <= signed(resize(reg5.val, 16)) - reg7;
+			reg8.val <= sub1;
 		elsif (cycles(7) = '1') then
-			if (reg7 > 383) then
-				-- o_dir <= reg5.dir;
-				-- o_edge <= '1';
+			if (reg8.val > 383) then
 				validEdge <= '1';
 				resultDir <= reg5.dir;
 			else
-				-- o_dir <= "000";
-				-- o_edge <= '0';
 				validEdge <= '0';
 				resultDir <= "000";
 			end if;
-			-- o_valid <= '1';
 		end if;
 	end process;
 

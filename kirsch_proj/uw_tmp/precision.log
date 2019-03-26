@@ -1,0 +1,77 @@
+# Info: [9566]: Logging session transcript to file /home/y433wu/ece327/BME351/kirsch_proj/precision.log
+//  Precision RTL Synthesis 64-bit 2015.2.16 (PS2015.2.1 Production Release) Tue Jan  5 23:04:49 PST 2016
+//  
+//  Copyright (c) Mentor Graphics Corporation, 1996-2016, All Rights Reserved.
+//             Portions copyright 1991-2008 Compuware Corporation
+//                       UNPUBLISHED, LICENSED SOFTWARE.
+//            CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
+//          PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS
+//  
+//  Running on Linux y433wu@ecetesla0 #49-Ubuntu SMP Wed Feb 6 09:33:07 UTC 2019 4.15.0-46-generic x86_64
+//  
+//  Start time Tue Mar 26 14:08:26 2019
+# -------------------------------------------------
+# Info: [9566]: Logging session transcript to file /home/y433wu/ece327/BME351/kirsch_proj/precision.log
+# Info: [9575]: The Results Directory has been set to: /home/y433wu/ece327/BME351/kirsch_proj/uw_tmp
+# Info: [9569]: Moving session transcript to file /home/y433wu/ece327/BME351/kirsch_proj/uw_tmp/precision.log
+# Info: [15298]: Setting up the design to use synthesis library "cycloneii.syn"
+# Info: [574]: The global max fanout is currently set to 1000 for Altera - Cyclone II.
+# Info: [15324]: Setting Part to: "EP2C70F896I".
+# Info: [15325]: Setting Process to: "8".
+# Info: [3022]: Reading file: /opt-src/CMC/local/maagaard/tools/mentor/precision/Mgc_home/pkgs/psr/techlibs/cycloneii.syn.
+# Info: [633]: Loading library initialization file /opt-src/CMC/local/maagaard/tools/mentor/precision/Mgc_home/pkgs/psr/userware/yeager_rename.tcl
+# Info: [40000]: vhdlorder, Release 2015b.13
+# Info: [40000]: Files sorted successfully.
+# Info: [40000]: hdl-analyze, Release RTLC-Precision 2015b.13
+# Info: [42502]: Analyzing input file "/home/y433wu/ece327/BME351/kirsch_proj/util.vhd" ...
+# Info: [42502]: Analyzing input file "/home/y433wu/ece327/BME351/kirsch_proj/kirsch_synth_pkg.vhd" ...
+# Info: [42502]: Analyzing input file "/home/y433wu/ece327/BME351/kirsch_proj/mem.vhd" ...
+# Info: [42502]: Analyzing input file "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd" ...
+# Info: [656]: Current working directory: /home/y433wu/ece327/BME351/kirsch_proj/uw_tmp.
+# Info: [40000]: RTLC-Driver, Release RTLC-Precision 2015b.13
+# Info: [40000]: Last compiled on Dec 24 2015 14:33:45
+# Info: [44512]: Initializing...
+# Info: [44504]: Partitioning design ....
+# Info: [40000]: RTLCompiler, Release RTLC-Precision 2015b.13
+# Info: [40000]: Last compiled on Dec 24 2015 15:06:12
+# Info: [44512]: Initializing...
+# Info: [44522]: Root Module work.kirsch(main): Pre-processing...
+# Info: [44506]: Module work.mem(main){generic map (data_width => 8 addr_width => 8)}: Pre-processing...
+# Info: [45251]: Built-in hardware memory core inferred for variable ': mem.mem depth = 256, width = 8'.
+# Info: [45144]: Extracted FSM in module work.kirsch(main), with state variable = row_state[2:0], async set/reset state(s) = (none), number of states = 3.
+# Info: [45144]: Re-encoding 3 state FSM as "binary".
+# Info: [45144]: FSM: State encoding table.
+# Info: [40000]: FSM:	Index	                            Literal	                      Encoding
+# Info: [40000]: FSM:	    0	                                001	                            00
+# Info: [40000]: FSM:	    1	                                010	                            01
+# Info: [40000]: FSM:	    2	                                100	                            10
+# Info: [40000]: The default branch of this FSM is being ignored to allow a more optimal implementation. To preserve it, please specify the attribute safe_fsm_type on the state variable
+# Info: [44508]: Module work.mem(main){generic map (data_width => 8 addr_width => 8)}: Compiling...
+# Info: [44523]: Root Module work.kirsch(main): Compiling...
+# Info: [44812]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 327: Sharing register sub1[13] with sub1[14]
+# Info: [44812]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 327: Sharing register sub1[13] with sub1[15]
+# Info: [44812]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 327: Sharing register reg8_val(14) with reg8_val(15)
+# Info: [44812]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 327: Sharing register sub1[13] with sub1[16]
+# Info: [44812]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 327: Sharing register reg8_val(14) with reg8_val(16)
+# Info: [44812]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 327: Sharing register sub1[12] with sub1[13]
+# Info: [44838]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 160: Macro Modgen_Counter "counter_up_sclear_clock_cnt_en_0_8" inferred for node "row_counter".
+# Info: [44838]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 179: Macro Modgen_Counter "counter_up_sclear_clock_clk_en_0_8" inferred for node "col_counter".
+# Info: [45309]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 265: Optimizing state bit(s) reg7[16:12] to constant 0
+# Info: [45309]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 327: Optimizing state bit(s) add4[16:14] to constant 0
+# Info: [45309]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 251: Optimizing state bit(s) reg3_val[9] to constant 0
+# Info: [45309]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 296: Optimizing state bit(s) reg5_val[9] to constant 0
+# Info: [45309]: "/home/y433wu/ece327/BME351/kirsch_proj/kirsch.vhd", line 251: Optimizing state bit(s) reg6_val[9] to constant 0
+# Info: [44842]: Compilation successfully completed.
+# Info: [44841]: Counter Inferencing === Detected : 2, Inferred (Modgen/Selcounter/AddSub) : 2 (2 / 0 / 0), AcrossDH (Merged/Not-Merged) : (0 / 0), Not-Inferred (Acrossdh/Attempted) : (0 / 0), Local Vars : 0 ===
+# Info: [44856]: Total lines of RTL compiled: 470.
+# Info: [44835]: Total CPU time for compilation: 0.0 secs.
+# Info: [44513]: Overall running time for compilation: 1.0 secs.
+# Info: [656]: Current working directory: /home/y433wu/ece327/BME351/kirsch_proj/uw_tmp.
+# Info: [15330]: Doing rtl optimizations.
+# Info: [659]: Finished compiling design.
+# Info: [3027]: Writing file: /home/y433wu/ece327/BME351/kirsch_proj/uw_tmp/kirsch_gate.vhd.
+# Info: Info, Command 'auto_write' finished successfully
+# Info: *** synthesis to generic gates succeeded ***
+# COMMAND: close_results_dir
+# Info: [9578]: The Results Directory has been closed.
+close_results_dir
