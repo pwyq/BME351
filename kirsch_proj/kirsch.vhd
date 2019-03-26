@@ -69,7 +69,8 @@ architecture main of kirsch is
 		return pMax;
 	end maxOperator1;
 
-	function maxOperator2 (p1_val : unsigned; p1_dir : std_logic_vector; p2_val : unsigned; p2_dir : std_logic_vector)
+	function maxOperator2 (p1_val : unsigned; p1_dir : std_logic_vector;
+						   p2_val : unsigned; p2_dir : std_logic_vector)
 		return maxTwoStruct is variable pMax : maxTwoStruct;
 	begin
 		if (p1_val > p2_val) then
@@ -212,14 +213,17 @@ begin
 -- --------------------------------
 -- Stage 1
 -- --------------------------------
-	add1 <= resize(unsigned(a), 9) + resize(unsigned(h), 9) when cycles(0) else
-			resize(unsigned(b), 9) + resize(unsigned(c), 9) when cycles(1) else
-			resize(unsigned(d), 9) + resize(unsigned(e), 9) when cycles(2) else
-			resize(unsigned(f), 9) + resize(unsigned(g), 9) when cycles(3) else
-			-- add1;
+	-- add1 <= resize(unsigned(a), 9) + resize(unsigned(h), 9) when cycles(0) else
+	-- 		resize(unsigned(b), 9) + resize(unsigned(c), 9) when cycles(1) else
+	-- 		resize(unsigned(d), 9) + resize(unsigned(e), 9) when cycles(2) else
+	-- 		resize(unsigned(f), 9) + resize(unsigned(g), 9) when cycles(3) else
+	-- 		-- add1;
+	-- 		to_unsigned(0, 9);
+	add1 <= ('0' & unsigned(a)) + ('0' & unsigned(h)) when cycles(0) else
+			('0' & unsigned(b)) + ('0' & unsigned(c)) when cycles(1) else
+			('0' & unsigned(d)) + ('0' & unsigned(e)) when cycles(2) else
+			('0' & unsigned(f)) + ('0' & unsigned(g)) when cycles(3) else
 			to_unsigned(0, 9);
-			-- should be fine
-
 
 	-- according to priority list
 	max1 <= maxOperator1(g, dir_w, b, dir_nw) when cycles(0) else
@@ -234,7 +238,7 @@ begin
 		if (cycles(0) = '1' or cycles(1) = '1' or cycles(2) = '1' or cycles(3) = '1' ) then
 			reg1.val <= max1.val;
 			reg1.dir <= max1.dir;
-			reg2 <= std_logic_vector(add1); --complain here maybe 
+			reg2 <= std_logic_vector(add1);
 		end if;
 	end process;
 
@@ -242,15 +246,30 @@ begin
 -- Stage 2
 -- --------------------------------
 
-	add2 <= resize(unsigned(reg1.val) + unsigned(reg2), 10); -- std 7 and std 9 -- fix size
-	add3 <= resize(unsigned(reg2), 12) + resize(reg4, 12);
+	-- TODO: reg1.val is std_logic_vector(7 downto 0), reg2 is std_logic_vector(8 downto 0)
+
+	-- -- inter-parcel (pg 261)
+	-- reg1.val <= "00" & reg1.val;	-- make reg1.val 10 bits
+	-- reg2 <= '0' & reg2; -- make reg2 10 bits
+	-- add2 <= reg1.val + reg2;
+	-- -- however, above would make reg1 and reg2 combinational... which against their registered assignment in stage 1,
+	-- -- so moved the bit-changing thing to stage 1 OR directly do the bit-changing thing HERE??
+
+	add2 <= ("00" & unsigned(reg1.val)) + ('0' & unsigned(reg2));	-- is this valid??
+	-- add2 <= resize(unsigned(reg1.val) + unsigned(reg2), 10); -- std 7 and std 9 -- fix size
+
+	-- add3 is unsigned(11 downto 0), reg4 is unsigned(11 downto 0)
+	add3 <= ("000" & unsigned(reg2)) + reg4; 
+	-- add3 <= resize(unsigned(reg2), 12) + resize(reg4, 12);
 
 	updateAddTwoOutput : process begin
 		wait until rising_edge(clk);
 		if (cycles(4) = '1') then
+			-- reg6 and reg3 both are maxTwoStruct, which .val is unsigned(9 downto 0)
 			reg6.val <= add2;
 			reg6.dir <= reg1.dir;
-		else
+		-- else
+		elsif (cycles(1) = '1' or cycles(2) = '1' or cycles(3) = '1') then
 			reg3.val <= add2;
 			reg3.dir <= reg1.dir;
 		end if;
@@ -260,10 +279,11 @@ begin
 		wait until rising_edge(clk);
 		
 		if (cycles(1) = '1') then
-			reg4 <= resize(unsigned(reg2),12);
+			-- reg4 <= resize(unsigned(reg2),12);
+			reg4 <= "000" & unsigned(reg2);
 		elsif (cycles(4) = '1') then
-			reg7 <= "00000" & signed(add3);
-		else
+			reg7 <= "00000" & signed(add3);	-- TODO, reg7 width is way too large
+		elsif (cycles(2) = '1' or cycles(3) = '1') then
 			reg4 <= add3;
 		end if;
 		on_stage2 <= on_stage1;
@@ -296,8 +316,9 @@ begin
 	updateStageFour : process begin
 		wait until rising_edge(clk);
 		
-		add4 <= reg7 + shift_left(reg7,1);
-		sub1 <= signed(shift_left(resize(reg5.val, 16), 3)) - reg7;
+		add4 <= reg7 + shift_left(reg7, 1);
+		-- sub1 <= signed(shift_left(resize(reg5.val, 16), 3)) - reg7;
+		sub1 <= signed(shift_left(("00000" & reg5.val), 3)) - reg7;
 		if (cycles(5) = '1') then
 			reg8.val <= add4;
 			reg8.dir <= reg5.dir;
