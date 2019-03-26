@@ -26,7 +26,6 @@ package state_pkg is
 		dir : std_logic_vector(2 downto 0);
 	end record;
 
-	-- used for reg5 (13-bit), reg6 (14-bit)
 	type regStruct is record
 		val : signed(16 downto 0);
 		dir : std_logic_vector(2 downto 0);
@@ -129,6 +128,7 @@ begin
 -- --------------------------------
 -- Preprocessing
 -- --------------------------------
+
 	o_row <= unsigned(row_counter);
 	o_col <= unsigned(col_counter);
 	o_mode(1) <= not reset;
@@ -242,20 +242,15 @@ begin
 -- Stage 2
 -- --------------------------------
 
-	-- add2 is unsigned(9 downto 0)
-	-- add3 is unsigned(11 downto 0)
 	add2 <= resize(unsigned(reg1.val) + unsigned(reg2), 10); -- std 7 and std 9 -- fix size
 	add3 <= resize(unsigned(reg2), 12) + resize(reg4, 12);
 
 	updateAddTwoOutput : process begin
 		wait until rising_edge(clk);
 		if (cycles(4) = '1') then
-		-- reg6 unsigned(9 down to 0)
 			reg6.val <= add2;
 			reg6.dir <= reg1.dir;
 		else
-		-- reg3 unsigned(9 downto 0)
-		-- add2 is unsigned(9 downto 0)
 			reg3.val <= add2;
 			reg3.dir <= reg1.dir;
 		end if;
@@ -264,8 +259,6 @@ begin
 	updateAddThreeOutput : process begin
 		wait until rising_edge(clk);
 		
-		-- reg4  unsigned(11 downto 0)
-		-- reg7 signed(16 downto 0)
 		if (cycles(1) = '1') then
 			reg4 <= resize(unsigned(reg2),12);
 		elsif (cycles(4) = '1') then
@@ -279,16 +272,7 @@ begin
 -- --------------------------------
 -- Stage 3
 -- --------------------------------
-	-- reg3.val unsigned(9 downto 0);
-	-- reg5.val unsigned(9 downto 0);
-	-- reg6/val unsigned(9 downto 0);
-	-- max2 unsigned(9 downto 0);
 
-			
-			-- when 
-			-- cycles(3) = '1' or cycles(4) = '1' or cycles(5) = '1' else 
-			-- max2;
-			--maxOperator2("0000000000", "000", "0000000000", "000");
 	max2 <= maxOperator2(reg3.val, reg3.dir, reg5.val, reg5.dir) when cycles(3) = '1' or cycles(4) = '1' else
 			maxOperator2(reg6.val, reg6.dir, reg5.val, reg5.dir) when cycles(5) = '1' else
 			maxOperator2("0000000000", "000", "0000000000", "000"); 
@@ -298,19 +282,9 @@ begin
 			reg5.val <= reg3.val;
 			reg5.dir <= reg3.dir;
 		elsif (cycles(3) = '1' or cycles(4) = '1' or cycles(5) = '1') then
-			-- max2 <= maxOperator2(reg3.val, reg3.dir, reg5.val, reg5.dir); 
 			reg5.val <= max2.val;
 			reg5.dir <= max2.dir;
-		-- elsif (cycles(5) = '1') then
-		-- 	-- max2 <= maxOperator2(reg6.val, reg6.dir, reg5.val, reg5.dir);
-		-- 	reg5.val <= max2.val;
-		-- 	reg5.dir <= max2.dir; 
 		end if;
-
-		-- if (cycles(5) = '1') then
-		-- 	reg5.val <= max2.val; --shift_left(max2.val, 3);	-- shift1 operator
-		-- 	reg5.dir <= max2.dir;
-		-- end if;
 		on_stage3 <= on_stage2;
 	end process;
 
@@ -332,7 +306,7 @@ begin
 		elsif (cycles(7) = '1') then
 			if (reg8.val > 383) then
 				validEdge <= '1';
-				resultDir <= reg5.dir;
+				resultDir <= reg8.dir;
 			else
 				validEdge <= '0';
 				resultDir <= "000";
