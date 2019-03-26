@@ -1,7 +1,0 @@
-1553623708.133060
-*2586324038
-ieee	/opt/Precision_Synthesis_2015/Mgc_home/pkgs/rtlc_psr.ixl/rtlc/IEEE_2008	STD_LOGIC_1164	STD_LOGIC_1164	2	0
-ieee	/opt/Precision_Synthesis_2015/Mgc_home/pkgs/rtlc_psr.ixl/rtlc/IEEE_2008	NUMERIC_STD	NUMERIC_STD	2	0
-work	/home/y433wu/ece327/BME351/kirsch_proj/uw_tmp/rtlc_libs/work	STATE_PKG	STATE_PKG	2	1314939913
-work	/home/y433wu/ece327/BME351/kirsch_proj/uw_tmp/rtlc_libs/work	UTIL	UTIL	2	4202305752
-work	/home/y433wu/ece327/BME351/kirsch_proj/uw_tmp/rtlc_libs/work	KIRSCH_SYNTH_PKG	KIRSCH_SYNTH_PKG	2	1428958512
