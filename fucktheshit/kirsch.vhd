@@ -296,14 +296,14 @@ begin
 		if (cycles(2) = '1') then
 			reg5.val <= reg3.val;
 			reg5.dir <= reg3.dir;
-		elsif (cycles(3) = '1' or cycles(4) = '1') then
+		elsif (cycles(3) = '1' or cycles(4) = '1' or cycles(5) = '1') then
 			-- max2 <= maxOperator2(reg3.val, reg3.dir, reg5.val, reg5.dir); 
 			reg5.val <= max2.val;
 			reg5.dir <= max2.dir;
-		elsif (cycles(5) = '1') then
-			-- max2 <= maxOperator2(reg6.val, reg6.dir, reg5.val, reg5.dir);
-			reg5.val <= max2.val;
-			reg5.dir <= max2.dir; 
+		-- elsif (cycles(5) = '1') then
+		-- 	-- max2 <= maxOperator2(reg6.val, reg6.dir, reg5.val, reg5.dir);
+		-- 	reg5.val <= max2.val;
+		-- 	reg5.dir <= max2.dir; 
 		end if;
 
 		-- if (cycles(5) = '1') then
@@ -330,14 +330,16 @@ begin
 		-- 	o_dir <= "000";
 		-- end if;
 
+		add4 <= reg7 + shift_left(reg7,1);
+		sub1 <= signed(shift_left(resize(reg5.val, 16), 3)) - reg7;
 		if (cycles(5) = '1') then
 			-- add4 <= reg7 + shift_left(reg7,1);
-			add4 <= reg7 + shift_left(reg7,1);
+			-- add4 <= reg7 + shift_left(reg7,1);
 			reg7 <= add4;
 			-- reg7 <= reg7 + shift_left(reg7,1);
 		elsif (cycles(6) = '1') then
 			-- sub1 <= signed(resize(reg5.val, 16)) - reg7;
-			sub1 <= signed(resize(reg5.val, 16)) - reg7;
+			-- sub1 <= signed(shift_left(resize(reg5.val, 16), 3)) - reg7;
 			reg7 <= sub1;
 			-- reg7 <= signed(resize(reg5.val, 16)) - reg7;
 		elsif (cycles(7) = '1') then
