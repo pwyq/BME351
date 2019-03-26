@@ -1,8 +1,9 @@
-# vsim -lib work-msim -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/altera -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/altera_mf -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/lpm -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/altera_primitives -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/fiftyfivenm -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/fiftyfivenm-enc -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/maxv -c -debugDB -postsimdataflow "+autofindloop" -wlf uw_tmp/vsim.wlf -voptargs="+acc" -warning 3250 -warning 3894 -t 1ns -do "uw_tmp/uw-sim.tcl" kirsch_tb -g/kirsch_tb/period=20 -g/kirsch_tb/test_num=1 -g/kirsch_tb/result_suffix=spec 
-# Start time: 14:12:51 on Mar 26,2019
+# vsim -lib work-msim -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/altera -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/altera_mf -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/lpm -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/altera_primitives -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/fiftyfivenm -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/fiftyfivenm-enc -L /opt-src/CMC/local/maagaard/kits-sim/altera-15.1/maxv -c -debugDB -postsimdataflow "+autofindloop" -wlf uw_tmp/vsim.wlf -voptargs="+acc" -warning 3250 -warning 3894 -t 1ns -do "uw_tmp/uw-sim.tcl" kirsch_tb -g/kirsch_tb/period=20 
+# Start time: 19:09:38 on Mar 26,2019
 # ** Note: (vsim-3812) Design is being optimized...
 # ** Note: (vsim-8611) Generating debug db.
 # ** Note: (vopt-143) Recognized 1 FSM in architecture body "kirsch(main)".
+# ** Note: (vopt-4301) Memory core inferred for signal 'mem' width=8, depth=256, type=RAM at location mem.vhd:41
 # //  ModelSim SE-64 10.5c Jul 20 2016Linux 4.15.0-46-generic
 # //
 # //  Copyright 1991-2016 Mentor Graphics Corporation
@@ -24,8 +25,11 @@
 # Loading work.file_pkg(body)
 # Loading work.string_pkg(body)
 # Loading work.kirsch_unsynth_pkg(body)
+# Loading work.util(body)
+# Loading work.state_pkg
 # Loading work.kirsch_tb(main)#1
 # Loading work.kirsch(main)#1
+# Loading work.mem(main)#1
 # ** Note: (vsim-8900) Creating design debug database uw_tmp/vsim.dbg.
 # do uw_tmp/uw-sim.tcl
 # PROG_MODE
@@ -34,17 +38,43 @@
 # runtime=5250880
 # ** Note: XXXXXXXXXXXX reading image from tests/test1.txt
 #    Time: 0 ns  Iteration: 0  Instance: /kirsch_tb
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /kirsch_tb/uut/MEMS(2)/mem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /kirsch_tb/uut/MEMS(1)/mem
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ns  Iteration: 0  Instance: /kirsch_tb/uut/MEMS(0)/mem
+# ** Warning: NUMERIC_STD.">=": metavalue detected, returning FALSE
+#    Time: 0 ns  Iteration: 0  Instance: /kirsch_tb/uut
 # ** Note: latency begin wait
 #    Time: 41302 ns  Iteration: 1  Instance: /kirsch_tb
 # ** Note: latency waiting
 #    Time: 41320 ns  Iteration: 1  Instance: /kirsch_tb
 # ** Note: latency waiting
 #    Time: 41340 ns  Iteration: 1  Instance: /kirsch_tb
-# ** Note: latency = 1
-#    Time: 41340 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41360 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41380 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41400 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41420 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41440 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41460 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Warning: NUMERIC_STD.">": metavalue detected, returning FALSE
+#    Time: 41480 ns  Iteration: 1  Instance: /kirsch_tb/uut
+# ** Note: latency waiting
+#    Time: 41480 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41500 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency = 9
+#    Time: 41500 ns  Iteration: 1  Instance: /kirsch_tb
 # ** Note: XXXXXXXXXXXX sent image
 #    Time: 5243002 ns  Iteration: 0  Instance: /kirsch_tb
 # ** Note: XXXXXXXXXXXX got image
-#    Time: 5243020 ns  Iteration: 1  Instance: /kirsch_tb
-# End time: 14:12:54 on Mar 26,2019, Elapsed time: 0:00:03
-# Errors: 0, Warnings: 0
+#    Time: 5243180 ns  Iteration: 1  Instance: /kirsch_tb
+# End time: 19:09:42 on Mar 26,2019, Elapsed time: 0:00:04
+# Errors: 0, Warnings: 5

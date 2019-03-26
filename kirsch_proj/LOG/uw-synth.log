@@ -1,6 +1,6 @@
     INFO: Starting PRECISION_RTL for logic synthesis
 precision: Setting MGC_HOME to /opt-src/CMC/local/maagaard/tools/mentor/precision/Mgc_home ...
-precision: Executing on platform: (UNKNOWN and UNSUPPORTED) Linux ecetesla0 4.15.0-46-generic #49-Ubuntu SMP Wed Feb 6 09:33:07 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+precision: Executing on platform: (UNKNOWN and UNSUPPORTED) Linux ecetesla2 4.15.0-46-generic #49-Ubuntu SMP Wed Feb 6 09:33:07 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
 //  Precision RTL Synthesis 64-bit 2015.2.16 (PS2015.2.1 Production Release) Tue Jan  5 23:04:49 PST 2016
 //  
 //  Copyright (c) Mentor Graphics Corporation, 1996-2016, All Rights Reserved.
@@ -9,9 +9,9 @@ precision: Executing on platform: (UNKNOWN and UNSUPPORTED) Linux ecetesla0 4.15
 //            CONFIDENTIAL AND PROPRIETARY INFORMATION WHICH IS THE
 //          PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS
 //  
-//  Running on Linux y433wu@ecetesla0 #49-Ubuntu SMP Wed Feb 6 09:33:07 UTC 2019 4.15.0-46-generic x86_64
+//  Running on Linux y433wu@ecetesla2 #49-Ubuntu SMP Wed Feb 6 09:33:07 UTC 2019 4.15.0-46-generic x86_64
 //  
-//  Start time Tue Mar 26 14:08:26 2019
+//  Start time Tue Mar 26 19:04:43 2019
 -------------------------------------------------
 Info: Logging session transcript to file precision.log
 Info: The Results Directory has been set to: uw_tmp
@@ -40,32 +40,63 @@ Info: Initializing...
 Info: Root Module work.kirsch(main): Pre-processing...
 Info: Module work.mem(main){generic map (data_width => 8 addr_width => 8)}: Pre-processing...
 Info: Built-in hardware memory core inferred for variable ': mem.mem depth = 256, width = 8'.
-Info: Extracted FSM in module work.kirsch(main), with state variable = row_state[2:0], async set/reset state(s) = (none), number of states = 3.
-Info: Re-encoding 3 state FSM as "binary".
-Info: FSM: State encoding table.
-Info: FSM:	Index	                            Literal	                      Encoding
-Info: FSM:	    0	                                001	                            00
-Info: FSM:	    1	                                010	                            01
-Info: FSM:	    2	                                100	                            10
-Info: The default branch of this FSM is being ignored to allow a more optimal implementation. To preserve it, please specify the attribute safe_fsm_type on the state variable
+Warning: "kirsch.vhd", line 88: signal o_mems has never been used.
+Warning: "kirsch.vhd", line 92: signal c[7:0] has no drivers, will be treated as don't care.
+Warning: "kirsch.vhd", line 93: signal d[7:0] has no drivers, will be treated as don't care.
 Info: Module work.mem(main){generic map (data_width => 8 addr_width => 8)}: Compiling...
 Info: Root Module work.kirsch(main): Compiling...
-Info: "kirsch.vhd", line 327: Sharing register sub1[13] with sub1[14]
-Info: "kirsch.vhd", line 327: Sharing register sub1[13] with sub1[15]
-Info: "kirsch.vhd", line 327: Sharing register reg8_val(14) with reg8_val(15)
-Info: "kirsch.vhd", line 327: Sharing register sub1[13] with sub1[16]
-Info: "kirsch.vhd", line 327: Sharing register reg8_val(14) with reg8_val(16)
-Info: "kirsch.vhd", line 327: Sharing register sub1[12] with sub1[13]
-Info: "kirsch.vhd", line 160: Macro Modgen_Counter "counter_up_sclear_clock_cnt_en_0_8" inferred for node "row_counter".
-Info: "kirsch.vhd", line 179: Macro Modgen_Counter "counter_up_sclear_clock_clk_en_0_8" inferred for node "col_counter".
-Info: "kirsch.vhd", line 265: Optimizing state bit(s) reg7[16:12] to constant 0
-Info: "kirsch.vhd", line 327: Optimizing state bit(s) add4[16:14] to constant 0
-Info: "kirsch.vhd", line 251: Optimizing state bit(s) reg3_val[9] to constant 0
-Info: "kirsch.vhd", line 296: Optimizing state bit(s) reg5_val[9] to constant 0
-Info: "kirsch.vhd", line 251: Optimizing state bit(s) reg6_val[9] to constant 0
+Info: "kirsch.vhd", line 196: Sharing register b[7] with b[6]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with a[6]
+Info: "kirsch.vhd", line 196: Sharing register b[7] with b[5]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with a[5]
+Info: "kirsch.vhd", line 196: Sharing register b[7] with b[4]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with a[4]
+Info: "kirsch.vhd", line 196: Sharing register b[7] with b[3]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with a[3]
+Info: "kirsch.vhd", line 196: Sharing register b[7] with b[2]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with a[2]
+Info: "kirsch.vhd", line 196: Sharing register b[7] with b[1]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with a[1]
+Info: "kirsch.vhd", line 196: Sharing register b[7] with b[0]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with a[0]
+Info: "kirsch.vhd", line 196: Sharing register b[7] with i[7]
+Info: "kirsch.vhd", line 196: Sharing register i[7] with i[6]
+Info: "kirsch.vhd", line 196: Sharing register i[6] with i[5]
+Info: "kirsch.vhd", line 196: Sharing register i[5] with i[4]
+Info: "kirsch.vhd", line 196: Sharing register i[4] with i[3]
+Info: "kirsch.vhd", line 196: Sharing register i[3] with i[2]
+Info: "kirsch.vhd", line 196: Sharing register i[2] with i[1]
+Info: "kirsch.vhd", line 196: Sharing register i[1] with i[0]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with h[7]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with h[6]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with h[5]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with h[4]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with h[3]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with h[2]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with h[1]
+Info: "kirsch.vhd", line 196: Sharing register a[7] with h[0]
+Info: "kirsch.vhd", line 323: Sharing register sub1[13] with sub1[14]
+Info: "kirsch.vhd", line 323: Sharing register add4[14] with add4[15]
+Info: "kirsch.vhd", line 323: Sharing register sub1[13] with sub1[15]
+Info: "kirsch.vhd", line 323: Sharing register reg8_val(14) with reg8_val(15)
+Info: "kirsch.vhd", line 323: Sharing register add4[14] with add4[16]
+Info: "kirsch.vhd", line 323: Sharing register sub1[13] with sub1[16]
+Info: "kirsch.vhd", line 323: Sharing register reg8_val(14) with reg8_val(16)
+Info: "kirsch.vhd", line 61: The comparison operator has been optimized to constant 1.
+Info: "kirsch.vhd", line 323: Sharing register sub1[12] with sub1[13]
+Info: "kirsch.vhd", line 168: Macro Modgen_Counter "counter_up_sclear_clock_cnt_en_0_8" inferred for node "row_counter".
+Info: "kirsch.vhd", line 187: Macro Modgen_Counter "counter_up_sclear_clock_clk_en_0_8" inferred for node "col_counter".
+Info: "kirsch.vhd", line 285: Optimizing state bit(s) reg7[16:12] to constant 0
+Info: "kirsch.vhd", line 323: Optimizing state bit(s) add4[14] to constant 0
+Info: "kirsch.vhd", line 323: Optimizing state bit(s) tmp1[16:12] to constant 0
+Info: "kirsch.vhd", line 323: Optimizing state bit(s) tmp1[2:0] to constant 0
+Info: "kirsch.vhd", line 323: Optimizing state bit(s) tmp2[16:12] to constant 0
+Info: "kirsch.vhd", line 272: Optimizing state bit(s) reg3_val[9] to constant 0
+Info: "kirsch.vhd", line 306: Optimizing state bit(s) reg5_val[9] to constant 0
+Info: "kirsch.vhd", line 272: Optimizing state bit(s) reg6_val[9] to constant 0
 Info: Compilation successfully completed.
 Info: Counter Inferencing === Detected : 2, Inferred (Modgen/Selcounter/AddSub) : 2 (2 / 0 / 0), AcrossDH (Merged/Not-Merged) : (0 / 0), Not-Inferred (Acrossdh/Attempted) : (0 / 0), Local Vars : 0 ===
-Info: Total lines of RTL compiled: 470.
+Info: Total lines of RTL compiled: 463.
 Info: Total CPU time for compilation: 0.0 secs.
 Info: Overall running time for compilation: 1.0 secs.
 Info: Current working directory: uw_tmp.
