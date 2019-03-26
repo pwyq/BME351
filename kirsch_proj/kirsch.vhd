@@ -69,7 +69,8 @@ architecture main of kirsch is
 		return pMax;
 	end maxOperator1;
 
-	function maxOperator2 (p1_val : unsigned; p1_dir : std_logic_vector; p2_val : unsigned; p2_dir : std_logic_vector)
+	function maxOperator2 (p1_val : unsigned; p1_dir : std_logic_vector;
+						   p2_val : unsigned; p2_dir : std_logic_vector)
 		return maxTwoStruct is variable pMax : maxTwoStruct;
 	begin
 		if (p1_val > p2_val) then
@@ -94,7 +95,9 @@ architecture main of kirsch is
 
 	signal on_stage1, on_stage2, on_stage3 : std_logic;
 	signal isComputable : std_logic;
-	signal cycles	: std_logic_vector(7 downto 0);
+	signal cycles	: std_logic_vector(8 downto 0);
+	signal validEdge : std_logic;
+	signal resultDir : direction_ty;
 
 	-------- Stage 1 Signals --------
 	signal add1	: unsigned(8 downto 0); -- 8 downto 0
@@ -120,9 +123,6 @@ architecture main of kirsch is
 	signal add4 : signed(16 downto 0);-- 13 downto 0
 	signal sub1 : signed(16 downto 0);-- 13 downto 0
 	signal reg8 : regStruct;	-- TODO: temporary register to fix the stage 4 problem; get rid of this if possible
-
-	signal validEdge : std_logic;
-	signal resultDir : direction_ty;
 	
 begin
 -- --------------------------------
@@ -141,7 +141,7 @@ begin
 			address => col_counter,
 			clock	=> clk,
 			data	=> std_logic_vector(i_pixel),
-			wren	=> i_valid and row_state(i),
+			wren	=> row_state(i),
 			q		=> o_mems(i)
 		);
 	end generate MEMS;
@@ -149,8 +149,8 @@ begin
 	updateState : process begin
 		wait until rising_edge(clk);
 		if (reset = '1') then
-			-- reset stuff
 			row_state <= S0;
+			on_stage1 <= '0';
 			col_counter <= to_unsigned(0, 8);
 			row_counter <= to_unsigned(0, 8);
 		elsif (i_valid = '1') then
@@ -203,10 +203,10 @@ begin
 	updateCycles : process begin
 		wait until rising_edge(clk);
 		if (reset = '1') then
-			cycles(7 downto 0) <= "00000000";
+			cycles(8 downto 0) <= "000000000";
 		else
 			cycles(0) <= isComputable and i_valid;
-			cycles(7 downto 1) <= cycles(6 downto 0);	-- new data coming in, moves cycles downwards
+			cycles(8 downto 1) <= cycles(7 downto 0);	-- new data coming in, moves cycles downwards
 		end if;
 	end process;
 -- --------------------------------
@@ -216,11 +216,7 @@ begin
 			resize(unsigned(b), 9) + resize(unsigned(c), 9) when cycles(1) else
 			resize(unsigned(d), 9) + resize(unsigned(e), 9) when cycles(2) else
 			resize(unsigned(f), 9) + resize(unsigned(g), 9) when cycles(3) else
-			-- add1;
 			to_unsigned(0, 9);
-			-- should be fine
-
-
 	-- according to priority list
 	max1 <= maxOperator1(g, dir_w, b, dir_nw) when cycles(0) else
 			maxOperator1(a, dir_n, d, dir_ne) when cycles(1) else
@@ -234,7 +230,7 @@ begin
 		if (cycles(0) = '1' or cycles(1) = '1' or cycles(2) = '1' or cycles(3) = '1' ) then
 			reg1.val <= max1.val;
 			reg1.dir <= max1.dir;
-			reg2 <= std_logic_vector(add1); --complain here maybe 
+			reg2 <= std_logic_vector(add1);
 		end if;
 	end process;
 
@@ -243,6 +239,7 @@ begin
 -- --------------------------------
 
 	add2 <= resize(unsigned(reg1.val) + unsigned(reg2), 10); -- std 7 and std 9 -- fix size
+
 	add3 <= resize(unsigned(reg2), 12) + resize(reg4, 12);
 
 	updateAddTwoOutput : process begin
@@ -250,7 +247,7 @@ begin
 		if (cycles(4) = '1') then
 			reg6.val <= add2;
 			reg6.dir <= reg1.dir;
-		else
+		elsif (cycles(1) = '1' or cycles(2) = '1' or cycles(3) = '1') then
 			reg3.val <= add2;
 			reg3.dir <= reg1.dir;
 		end if;
@@ -262,8 +259,8 @@ begin
 		if (cycles(1) = '1') then
 			reg4 <= resize(unsigned(reg2),12);
 		elsif (cycles(4) = '1') then
-			reg7 <= "00000" & signed(add3);
-		else
+			reg7 <= "00000" & signed(add3);	-- TODO, reg7 width is way too large
+		elsif (cycles(2) = '1' or cycles(3) = '1') then
 			reg4 <= add3;
 		end if;
 		on_stage2 <= on_stage1;
@@ -296,8 +293,8 @@ begin
 	updateStageFour : process begin
 		wait until rising_edge(clk);
 		
-		add4 <= reg7 + shift_left(reg7,1);
-		sub1 <= signed(shift_left(resize(reg5.val, 16), 3)) - reg7;
+		add4 <= reg7 + shift_left(reg7, 1);
+		sub1 <= signed(shift_left(resize(reg5.val, 17), 3)) - add4;
 		if (cycles(5) = '1') then
 			reg8.val <= add4;
 			reg8.dir <= reg5.dir;
@@ -314,7 +311,7 @@ begin
 		end if;
 	end process;
 
-	o_valid <= cycles(7);
+	o_valid <= cycles(8);
 	o_edge <= validEdge;
 	o_dir <= resultDir;
 
