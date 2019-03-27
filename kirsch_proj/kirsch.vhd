@@ -22,14 +22,14 @@ package state_pkg is
 
 	-- used for reg2 (10-bit), max2 (10-bit)
 	type maxTwoStruct is record
-		val : unsigned(9 downto 0);
+		val : unsigned(12 downto 0);
 		dir : std_logic_vector(2 downto 0);
 	end record;
 
-	type regStruct is record
-		val : signed(16 downto 0);
-		dir : std_logic_vector(2 downto 0);
-	end record;
+--	type regStruct is record
+--		val : signed(16 downto 0);
+--		dir : std_logic_vector(2 downto 0);
+--	end record;
 end state_pkg;
 
 library ieee;
@@ -95,35 +95,28 @@ architecture main of kirsch is
 
 	signal on_stage1, on_stage2, on_stage3 : std_logic;
 	signal isComputable : std_logic;
-	signal cycles	: std_logic_vector(8 downto 0);
+	signal cycles	: std_logic_vector(7 downto 0);
 	signal validEdge : std_logic;
 	signal resultDir : direction_ty;
 
 	-------- Stage 1 Signals --------
-	signal add1	: unsigned(8 downto 0); -- 8 downto 0
-	signal reg1 : maxOneStruct; -- 7 downto 0
-
+	signal add1	: unsigned(8 downto 0); --9 bits
+	signal add2 : unsigned(9 downto 0);
 	signal max1	: maxOneStruct;	-- 7 downto 0
-	signal reg2 : std_logic_vector(8 downto 0);	-- 8 downto 0
-
+	signal reg1 : maxTwoStruct; -- 13 bits
+	signal reg2 : unsigned(8 downto 0);	-- 9bits
+	
 	-------- Stage 2 Signals --------
-	signal add2 : unsigned(9 downto 0); -- 9 downto 0
-	signal reg3 : maxTwoStruct;	-- 9 downto 0
-
-	signal add3 : unsigned(11 downto 0); -- 11 downto 0
-	signal reg4 : unsigned(11 downto 0); -- 11 downto 0
+	signal add3 : unsigned(12 downto 0);
+	signal reg3 : unsigned(12 downto 0);
 
 	-------- Stage 3 Signals --------
-	signal reg5 : maxTwoStruct;	-- 12 downto 0 (regStruct is 13 downto 0)
-	signal max2 : maxTwoStruct;	-- 9 downto 0
+	signal max2 : maxTwoStruct;
+	signal sub1 : signed(13 downto 0);
+	signal reg4 : maxTwoStruct;
+	signal reg5 : signed(13 downto 0);
 
-	-------- Stage 4 Signals --------
-	signal reg6 : maxTwoStruct;	-- 13 downto 0
-	signal reg7 : signed(16 downto 0);-- 11 downto 0
-	signal add4 : signed(16 downto 0);-- 13 downto 0
-	signal sub1 : signed(16 downto 0);-- 13 downto 0
-	signal reg8 : regStruct;	-- TODO: temporary register to fix the stage 4 problem; get rid of this if possible
-	
+	signal temp : std_logic;
 begin
 -- --------------------------------
 -- Preprocessing
@@ -203,10 +196,10 @@ begin
 	updateCycles : process begin
 		wait until rising_edge(clk);
 		if (reset = '1') then
-			cycles(8 downto 0) <= "000000000";
+			cycles(7 downto 0) <= "00000000";
 		else
 			cycles(0) <= isComputable and i_valid;
-			cycles(8 downto 1) <= cycles(7 downto 0);	-- new data coming in, moves cycles downwards
+			cycles(7 downto 1) <= cycles(6 downto 0);	-- new data coming in, moves cycles downwards
 		end if;
 	end process;
 -- --------------------------------
@@ -225,94 +218,83 @@ begin
 			-- max1;
 			maxOperator1("00000000", "000", "00000000", "000");
 
+	add2 <= resize(add1, 10) + resize(unsigned(max1.val), 10);
+
 	updateStageOne : process begin
 		wait until rising_edge(clk);
-		if (cycles(0) = '1' or cycles(1) = '1' or cycles(2) = '1' or cycles(3) = '1' ) then
-			reg1.val <= max1.val;
+			reg1.val <= resize(add2, 13);
 			reg1.dir <= max1.dir;
-			reg2 <= std_logic_vector(add1);
-		end if;
 	end process;
 
 -- --------------------------------
 -- Stage 2
 -- --------------------------------
 
-	add2 <= resize(unsigned(reg1.val) + unsigned(reg2), 10); -- std 7 and std 9 -- fix size
+	add3 <= resize(reg2, 13) + resize(add1, 13) when cycles(1) else
+			resize(reg3, 13) + resize(shift_left(reg3, 1), 13) when cycles(4) else
+			resize(add1, 13) + resize(reg3, 13);
 
-	add3 <= resize(unsigned(reg2), 12) + resize(reg4, 12);
-
-	updateAddTwoOutput : process begin
+	updateStage2 : process begin
 		wait until rising_edge(clk);
-		if (cycles(4) = '1') then
-			reg6.val <= add2;
-			reg6.dir <= reg1.dir;
-		elsif (cycles(1) = '1' or cycles(2) = '1' or cycles(3) = '1') then
-			reg3.val <= add2;
-			reg3.dir <= reg1.dir;
-		end if;
+			on_stage2 <= on_stage1;
+			reg3 <= add3;
 	end process;
 
-	updateAddThreeOutput : process begin
+	updateReg2 : process begin
 		wait until rising_edge(clk);
-		
-		if (cycles(1) = '1') then
-			reg4 <= resize(unsigned(reg2),12);
-		elsif (cycles(4) = '1') then
-			reg7 <= "00000" & signed(add3);	-- TODO, reg7 width is way too large
-		elsif (cycles(2) = '1' or cycles(3) = '1') then
-			reg4 <= add3;
+		if (cycles(0) = '1') then
+			reg2 <= add1;
 		end if;
-		on_stage2 <= on_stage1;
 	end process;
 
 -- --------------------------------
 -- Stage 3
 -- --------------------------------
 
-	max2 <= maxOperator2(reg3.val, reg3.dir, reg5.val, reg5.dir) when cycles(3) = '1' or cycles(4) = '1' else
-			maxOperator2(reg6.val, reg6.dir, reg5.val, reg5.dir) when cycles(5) = '1' else
-			maxOperator2("0000000000", "000", "0000000000", "000"); 
-	updateStageThree : process begin
+	max2 <= maxOperator2(reg4.val, reg4.dir, reg1.val, reg1.dir);
+	sub1 <= signed(resize(reg4.val, 14)) - signed(resize(reg3, 14));
+
+	process begin
 		wait until rising_edge(clk);
-		if (cycles(2) = '1') then
-			reg5.val <= reg3.val;
-			reg5.dir <= reg3.dir;
-		elsif (cycles(3) = '1' or cycles(4) = '1' or cycles(5) = '1') then
-			reg5.val <= max2.val;
-			reg5.dir <= max2.dir;
+		if (cycles(1) = '1') then
+			reg4.val <= resize(reg1.val, 13);
+			reg4.dir <= reg1.dir;
+		elsif (cycles(4) = '1') then
+			reg4.val <= shift_left(max2.val, 3);
+			reg4.dir <= max2.dir;
+			resultDir <= max2.dir;
+		else -- add cycles here
+			reg4.val <= max2.val;
+			reg4.dir <= max2.dir;
 		end if;
 		on_stage3 <= on_stage2;
+	end process;
+
+	process begin
+		wait until rising_edge(clk);
+		if (cycles(5) = '1') then
+			reg5 <= sub1;
+		end if;
 	end process;
 
 -- --------------------------------
 -- Stage 4
 -- --------------------------------
 
-	-- we need to resize this stage appropriately 
-	updateStageFour : process begin
+	temp <= '1' when reg5 > 383 else '0';
+	process begin
 		wait until rising_edge(clk);
-		
-		add4 <= reg7 + shift_left(reg7, 1);
-		sub1 <= signed(shift_left(resize(reg5.val, 17), 3)) - add4;
-		if (cycles(5) = '1') then
-			reg8.val <= add4;
-			reg8.dir <= reg5.dir;
-		elsif (cycles(6) = '1') then
-			reg8.val <= sub1;
-		elsif (cycles(7) = '1') then
-			if (reg8.val > 383) then
-				validEdge <= '1';
-				resultDir <= reg8.dir;
-			else
-				validEdge <= '0';
-				resultDir <= "000";
-			end if;
+		if (cycles(6) = '1') then
+			--resultDir <= resultDir;
+			validEdge <= temp;
+		else
+			--resultDir <= "000";
+			validEdge <= '0';
 		end if;
 	end process;
 
-	o_valid <= cycles(8);
 	o_edge <= validEdge;
-	o_dir <= resultDir;
+	o_dir <= resultDir when validEdge else "000";
+	o_valid <= cycles(7);
 
 end architecture;
