@@ -12,8 +12,6 @@ package state_pkg is
 	subtype o_mem_data is std_logic_vector(7 downto 0); 
 		type o_mem_vec is array(natural range <>) of o_mem_data;
 
-	subtype direction_type is std_logic_vector(2 downto 0);
-
 	type maxOneStruct is RECORD
 		val : std_logic_vector(7 downto 0);
 		dir : std_logic_vector(2 downto 0);
@@ -53,7 +51,7 @@ architecture main of kirsch is
 	function maxOperator1(p1_val, p1_dir, p2_val, p2_dir : std_logic_vector)
 	return maxOneStruct is variable pMax : maxOneStruct;
 	begin
-		if p1_val >= p2_val then
+		if (p1_val >= p2_val) then
 			pMax.val := p1_val;
 			pMax.dir := p1_dir;
 		else
@@ -61,13 +59,13 @@ architecture main of kirsch is
 			pMax.dir := p2_dir;
 		end if;
 		return pMax;
-	end maxOperator1;	
+	end maxOperator1;
 
 	function maxOperator2(p1_val : unsigned; p1_dir : std_logic_vector;
 						  p2_val : unsigned; p2_dir : std_logic_vector)
 	return maxTwoStruct is variable pMax : maxTwoStruct;
 	begin
-		if p1_val >= p2_val then
+		if (p1_val >= p2_val) then
 			pMax.val := p1_val;
 			pMax.dir := p1_dir;
 		else
@@ -75,7 +73,7 @@ architecture main of kirsch is
 			pMax.dir := p2_dir;
 		end if;
 		return pMax;
-	end maxOperator2;	
+	end maxOperator2;
 	
 	-------- General Signals --------
 	signal a, b, c,
@@ -120,46 +118,45 @@ begin
 
 	isComputable <= '1' when (row_counter >= to_unsigned(2, 8) AND col_counter >= to_unsigned(2, 8)) else '0';
 
-	MEM_SLOT : for i in 0 to 2 generate 
+	MEMS : for i in 0 to 2 generate 
 		mem : entity work.mem(main)
-		port map (	
-		address => col_counter, 
-		clock => clk,
-		data => std_logic_vector(i_pixel),
-		wren => row_state(i),
-		q => o_mems(i)
+		port map (
+			address => col_counter,
+			clock   => clk,
+			data    => std_logic_vector(i_pixel),
+			wren    => row_state(i),
+			q       => o_mems(i)
 		);
-	end generate MEM_SLOT;
+	end generate MEMS;
 
 	updateState : process begin 
 		wait until rising_edge(clk);
-			if (reset = '1') then
+		if (reset = '1') then
 			row_state <= S0;
-			--reg5 <= to_signed(0, 14);
 			col_counter <= to_unsigned(0, 8);
 			row_counter <= to_unsigned(0, 8);
-			elsif (i_valid = '1') then		
-					on_stage1 <= '1';			 
-				if (col_counter = to_unsigned(255, 8)) then
-					row_counter <= row_counter + 1;
-					if (row_counter = to_unsigned(255, 8)) then 
-						row_state <= S0;
-						on_stage1 <= '0';
-					else
-						case (row_state) is
-							when S0 =>
-								row_state <= S1;
-							when S1 =>
-								row_state <= S2;
-							when S2 =>
-								row_state <= S0;
-							when others =>
-								row_state <= row_state;
-						end case;
-					end if;
+		elsif (i_valid = '1') then
+			on_stage1 <= '1';			 
+			if (col_counter = to_unsigned(255, 8)) then
+				row_counter <= row_counter + 1;
+				if (row_counter = to_unsigned(255, 8)) then 
+					row_state <= S0;
+					on_stage1 <= '0';
+				else
+					case (row_state) is
+						when S0 =>
+							row_state <= S1;
+						when S1 =>
+							row_state <= S2;
+						when S2 =>
+							row_state <= S0;
+						when others =>
+							row_state <= row_state;
+					end case;
 				end if;
-				col_counter <= col_counter + 1;
 			end if;
+			col_counter <= col_counter + 1;
+		end if;
 	end process;
 
 -- --------------------------------
