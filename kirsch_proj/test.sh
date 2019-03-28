@@ -1,5 +1,8 @@
 #./test_helper.sh
 uw-synth kirsch.uwp
+cd tests
+rm *_sim.ted
+cd ..
 uw-sim --nogui -Gtest_num=1 kirsch.uwp
 uw-sim --nogui -Gtest_num=2 kirsch.uwp
 uw-sim --nogui -Gtest_num=3 kirsch.uwp
@@ -12,3 +15,9 @@ diff_ted res3_sim.ted res3_spec.ted
 diff_ted res4_sim.ted res4_spec.ted
 diff_ted res5_sim.ted res5_spec.ted
 cd ..
+
+echo "---------------- optimal score --------------"
+date
+echo "---------------------------------------------"
+
+uw-synth --opt kirsch.uwp
