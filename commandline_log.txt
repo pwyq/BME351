@@ -1,0 +1,790 @@
+login as: y433wu
+     ┌────────────────────────────────────────────────────────────────────┐
+     │                        • MobaXterm 11.0 •                          │
+     │            (SSH client, X-server and networking tools)             │
+     │                                                                    │
+     │ ➤ SSH session to y433wu@eceubuntu.uwaterloo.ca                     │
+     │   • SSH compression : ✔                                            │
+     │   • SSH-browser     : ✔                                            │
+     │   • X11-forwarding  : ✔  (remote display is forwarded through SSH) │
+     │   • DISPLAY         : ✔  (automatically set on remote server)      │
+     │                                                                    │
+     │ ➤ For more info, ctrl+click on help or visit our website           │
+     └────────────────────────────────────────────────────────────────────┘
+
+Welcome to Ubuntu 18.04.2 LTS (GNU/Linux 4.15.0-45-generic x86_64)
+
+
+0 packages can be updated.
+0 updates are security updates.
+
+*** System restart required ***
+Last login: Wed Mar 27 11:10:09 2019 from 172.16.38.100
+INFO: setting CMC=/opt-src/CMC
+INFO: setting CMC_MDA=/opt-src/CMC/local/maagaard
+INFO: setting ECE327=/home/ece327
+y433wu@eceubuntu2:~$ cd ece327
+y433wu@eceubuntu2:~/ece327$
+y433wu@eceubuntu2:~/ece327$ ll
+total 606
+drwxr-xr-x  5 y433wu users      8 Mar 26 19:38 BME351
+drwxr-xr-x 14 y433wu users     28 Mar 22 13:47 lab1
+drwxr-xr-x 14 y433wu users     30 Mar  1 10:37 lab2
+drwxr-xr-x 15 y433wu users     31 Mar 27 11:10 lab3
+-rwxr--r--  1 y433wu users 463071 Jan 22 13:18 lab-manual.pdf
+drwxr-xr-x 15 y433wu users     40 Mar 25 12:28 parallel-proj
+drwxr-xr-x  3 y433wu users      3 Mar 23 19:21 peter
+drwxr-xr-x 15 y433wu users     39 Mar 27 16:17 proj
+y433wu@eceubuntu2:~/ece327$ cd BME351/
+y433wu@eceubuntu2:~/ece327/BME351$
+y433wu@eceubuntu2:~/ece327/BME351$ ll
+total 28
+drwxr-xr-x 15 y433wu users   44 Mar 27 17:15 kirsch_proj
+-rwxr--r--  1 y433wu users 1285 Mar 26 14:19 README.md
+-rwxr--r--  1 y433wu users  981 Mar 26 13:38 temp_stage_bit_assignment.txt
+drwxr-xr-x  4 y433wu users    4 Mar 26 19:38 use_terminal
+y433wu@eceubuntu2:~/ece327/BME351$ cd kirsch_proj/
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ ll
+total 1622
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera_mf
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera_primitives
+-rw-r--r-- 1 y433wu users  17189 Mar 23 21:30 components.vhd
+-rw-r--r-- 1 y433wu users 850996 Mar 23 21:30 dfd-name.pdf
+-rw-r--r-- 1 y433wu users     43 Mar 27 17:15 doa_test.txt
+-rwxr-xr-x 1 y433wu users   1382 Mar 27 17:05 edge_calculation.py
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 fiftyfivenm
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 fiftyfivenm-enc
+-rw-r--r-- 1 y433wu users    387 Mar 23 21:30 kirsch_spec.uwp
+-rw-r--r-- 1 y433wu users   6573 Mar 23 21:30 kirsch_spec.vhd
+-rwxr--r-- 1 y433wu users 980992 Mar 23 21:30 kirsch_spec.xls
+-rw-r--r-- 1 y433wu users   3063 Mar 23 21:30 kirsch_synth_pkg.vhd
+-rw-r--r-- 1 y433wu users   2155 Mar 23 21:30 kirsch_tb.sim
+-rw-r--r-- 1 y433wu users   7861 Mar 23 21:30 kirsch_tb.vhd
+-rw-r--r-- 1 y433wu users 728516 Mar 26 20:22 kirsch_top.sof
+-rw-r--r-- 1 y433wu users    258 Mar 23 21:30 kirsch_top.uwp
+-rw-r--r-- 1 y433wu users    228 Mar 23 21:30 kirsch_top.uwp.W2017
+-rw-r--r-- 1 y433wu users   9367 Mar 23 21:30 kirsch_top.vhd
+-rw-r--r-- 1 y433wu users   6366 Mar 23 21:30 kirsch_top.vhd.W2017
+-rw-r--r-- 1 y433wu users   6973 Mar 23 21:30 kirsch_unsynth_pkg.vhd
+-rw-r--r-- 1 y433wu users    330 Mar 23 21:30 kirsch.uwp
+-rw-r--r-- 1 y433wu users   7988 Mar 27 17:13 kirsch.vhd
+drwxr-xr-x 2 y433wu users      7 Mar 26 20:22 LOG
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 lpm
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 maxv
+-rw-r--r-- 1 y433wu users   2125 Mar 23 21:30 mem.vhd
+-rw-r--r-- 1 y433wu users  92683 Mar 27 17:15 modelsim.ini
+drwxr-xr-x 2 y433wu users      3 Mar 26 14:08 modgen_sim
+-rw-r--r-- 1 y433wu users    344 Mar 23 21:30 radix.sim
+drwxr-xr-x 2 y433wu users      4 Mar 27 17:14 RPT
+-rw-r--r-- 1 y433wu users   1424 Mar 23 21:30 string_pkg.vhd
+-rw-r--r-- 1 y433wu users   3332 Mar 23 21:30 syn_fifo.vhd
+-rwxr-xr-x 1 y433wu users    390 Mar 27 16:18 test_helper.sh
+-rwxr--r-- 1 y433wu users     36 Mar 26 20:53 test_input.txt
+drwxr-xr-x 3 y433wu users     44 Mar 27 17:15 tests
+-rwxr-xr-x 1 y433wu users    428 Mar 27 16:23 test.sh
+-rw-r--r-- 1 y433wu users   4324 Mar 27 17:15 transcript
+-rw-r--r-- 1 y433wu users    697 Mar 23 21:30 util.vhd
+drwxr-xr-x 7 y433wu users     93 Mar 27 17:15 uw_tmp
+-rw-r--r-- 1 y433wu users    104 Mar 27 17:03 vish_stacktrace.vstf
+drwxr-xr-x 8 y433wu users     14 Mar 27 17:15 work-msim
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ git status
+On branch pwyq-dev
+Your branch is up to date with 'origin/pwyq-dev'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   ../.gitignore
+        modified:   LOG/latency.asn
+        modified:   LOG/uw-sim.log
+        modified:   LOG/uw-synth.log
+        modified:   tests/res1_sim.ted
+        modified:   tests/res3_sim.ted
+        modified:   transcript
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        kirsch_top.sof
+        test_input.txt
+        vish_stacktrace.vstf
+        ../use_terminal/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ reset
+Erase is control-H (^H).
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ ll
+total 1622
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera_mf
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera_primitives
+-rw-r--r-- 1 y433wu users  17189 Mar 23 21:30 components.vhd
+-rw-r--r-- 1 y433wu users 850996 Mar 23 21:30 dfd-name.pdf
+-rw-r--r-- 1 y433wu users     43 Mar 27 17:15 doa_test.txt
+-rwxr-xr-x 1 y433wu users   1382 Mar 27 17:05 edge_calculation.py
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 fiftyfivenm
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 fiftyfivenm-enc
+-rw-r--r-- 1 y433wu users    387 Mar 23 21:30 kirsch_spec.uwp
+-rw-r--r-- 1 y433wu users   6573 Mar 23 21:30 kirsch_spec.vhd
+-rwxr--r-- 1 y433wu users 980992 Mar 23 21:30 kirsch_spec.xls
+-rw-r--r-- 1 y433wu users   3063 Mar 23 21:30 kirsch_synth_pkg.vhd
+-rw-r--r-- 1 y433wu users   2155 Mar 23 21:30 kirsch_tb.sim
+-rw-r--r-- 1 y433wu users   7861 Mar 23 21:30 kirsch_tb.vhd
+-rw-r--r-- 1 y433wu users 728516 Mar 26 20:22 kirsch_top.sof
+-rw-r--r-- 1 y433wu users    258 Mar 23 21:30 kirsch_top.uwp
+-rw-r--r-- 1 y433wu users    228 Mar 23 21:30 kirsch_top.uwp.W2017
+-rw-r--r-- 1 y433wu users   9367 Mar 23 21:30 kirsch_top.vhd
+-rw-r--r-- 1 y433wu users   6366 Mar 23 21:30 kirsch_top.vhd.W2017
+-rw-r--r-- 1 y433wu users   6973 Mar 23 21:30 kirsch_unsynth_pkg.vhd
+-rw-r--r-- 1 y433wu users    330 Mar 23 21:30 kirsch.uwp
+-rw-r--r-- 1 y433wu users   7988 Mar 27 17:13 kirsch.vhd
+drwxr-xr-x 2 y433wu users      7 Mar 26 20:22 LOG
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 lpm
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 maxv
+-rw-r--r-- 1 y433wu users   2125 Mar 23 21:30 mem.vhd
+-rw-r--r-- 1 y433wu users  92683 Mar 27 17:15 modelsim.ini
+drwxr-xr-x 2 y433wu users      3 Mar 26 14:08 modgen_sim
+-rw-r--r-- 1 y433wu users    344 Mar 23 21:30 radix.sim
+drwxr-xr-x 2 y433wu users      4 Mar 27 17:14 RPT
+-rw-r--r-- 1 y433wu users   1424 Mar 23 21:30 string_pkg.vhd
+-rw-r--r-- 1 y433wu users   3332 Mar 23 21:30 syn_fifo.vhd
+-rwxr-xr-x 1 y433wu users    390 Mar 27 16:18 test_helper.sh
+-rwxr--r-- 1 y433wu users     36 Mar 26 20:53 test_input.txt
+drwxr-xr-x 3 y433wu users     44 Mar 27 17:15 tests
+-rwxr-xr-x 1 y433wu users    428 Mar 27 16:23 test.sh
+-rw-r--r-- 1 y433wu users   4324 Mar 27 17:15 transcript
+-rw-r--r-- 1 y433wu users    697 Mar 23 21:30 util.vhd
+drwxr-xr-x 7 y433wu users     93 Mar 27 17:15 uw_tmp
+-rw-r--r-- 1 y433wu users    104 Mar 27 17:03 vish_stacktrace.vstf
+drwxr-xr-x 8 y433wu users     14 Mar 27 17:15 work-msim
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth --chip kirsch_top.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "syn_fifo.vhd"
+INFO: Analyzing "kirsch.vhd"
+INFO: Analyzing "components.vhd"
+INFO: Analyzing "kirsch_top.vhd"
+Warning: "kirsch_top.vhd", line 34: Input port sw has never been used.
+Warning: "kirsch_top.vhd", line 35: Input port pb[3:1] has never been used.
+Warning: "kirsch_top.vhd", line 40: Output port led has never been assigned a value.
+Warning: "kirsch_top.vhd", line 56: signal k_o_col has never been used.
+Warning: "kirsch_top.vhd", line 79: signal pb0_r_edge has never been used.
+Warning: "kirsch_top.vhd", line 82: signal wb_full has never been used.
+Warning: "kirsch_top.vhd", line 86: signal rb_full has never been used.
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "syn_fifo.vhd"
+INFO: Analyzing "kirsch.vhd"
+INFO: Analyzing "components.vhd"
+INFO: Analyzing "kirsch_top.vhd"
+Warning: "kirsch_top.vhd", line 34: Input port sw has never been used.
+Warning: "kirsch_top.vhd", line 35: Input port pb[3:1] has never been used.
+Warning: "kirsch_top.vhd", line 40: Output port led has never been assigned a value.
+Warning: "kirsch_top.vhd", line 56: signal k_o_col has never been used.
+Warning: "kirsch_top.vhd", line 79: signal pb0_r_edge has never been used.
+Warning: "kirsch_top.vhd", line 82: signal wb_full has never been used.
+Warning: "kirsch_top.vhd", line 86: signal rb_full has never been used.
+       INFO: generic-gate       netlist         written to uw_tmp/kirsch_top_gate.vhd
+    INFO: generic-gate       area estimate   written to RPT/area_gate.rpt
+    INFO: logic-synthesis    netlist         written to uw_tmp/kirsch_top_logic.vhd
+    INFO: logic-synthesis    area estimate   written to RPT/area_logic.rpt
+    INFO: logic-synthesis    timing estimate written to RPT/timing_logic.rpt
+    INFO: --------------------------------------------------------------------------------
+    INFO: AREA = 599 cells (599 luts, 344 regs) (estimated by logic-synthesis)
+    INFO: Speed on Max 10 = 101 MHz,  9.85 ns (estimated by logic-synthesis)
+    INFO: --------------------------------------------------------------------------------
+    INFO: CRITICAL PATHS (slowest 5 paths, estimated by logic synthesis)
+    INFO: ..........Delays.........
+    INFO:  Total  Datapath  Routing          Source              Dest
+    INFO: ------  --------  -------   --------------------  ---------------------
+    INFO:   9.85     9.58     0.27    u_kirsch_...cycles(1) u_kirsch_...eg3(13)/d
+    INFO:   9.85     9.58     0.27    u_kirsch_...cycles(0) u_kirsch_...eg3(13)/d
+    INFO:   9.68     9.41     0.27    u_kirsch_...cycles(2) u_kirsch_...eg3(13)/d
+    INFO:   9.10     8.83     0.27    u_kirsch_...cycles(3) u_kirsch_...eg3(13)/d
+    INFO:   7.98     7.71     0.27    u_kirsch_reg_f(0)     u_kirsch_...eg3(13)/d
+    INFO: Starting QUARTUS for physical synthesis
+    INFO: map... fit... tan... asm... eda...
+     INFO: generic-gate       netlist         written to uw_tmp/kirsch_top_gate.vhd
+    INFO: generic-gate       area estimate   written to RPT/area_gate.rpt
+    INFO: logic-synthesis    netlist         written to uw_tmp/kirsch_top_logic.vhd
+    INFO: logic-synthesis    area estimate   written to RPT/area_logic.rpt
+    INFO: logic-synthesis    timing estimate written to RPT/timing_logic.rpt
+    INFO: chip               netlist         written to uw_tmp/kirsch_top_chip.vhd
+    INFO: chip               area estimate   written to RPT/area_chip.rpt
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to lstep was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth --chip kirsch_top.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+^C    INFO: Keyboard interrupt when running `precision -shell -file uw_tmp/uw-logic-synth-precision_rtl.tcl'
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ ece327-run-proj
+-bash: /home/ece327/bin/ece327-run-proj: Permission denied
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-sim --logic --timing
+usage: uw-sim [-h] [--debug DEBUG] [--gui] [--nogui] [-i] [-G GENERICS]
+              [-C CONFIGS] [-b BOARD] [-p] [-g] [-l] [-c] [-t] [-T SIM_PERIOD]
+              [--sim_script SIM_SCRIPT] [--design_arch DESIGN_ARCH]
+              [-L LIB_DIR] [--assertdebug] [--resolution TIME_RESOLUTION]
+              src_files [src_files ...]
+uw-sim: error: too few arguments
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-sim --logic --timing kirsch.uwp
+uw-sim /home/ece327/bin/uw-sim --logic --timing kirsch.uwp
+ERROR: missing synthesized netlist file: uw_tmp/kirsch_logic_sim.vhd
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-sim --logic --timing kirsch
+kirsch_spec.uwp         kirsch_spec.xls         kirsch_tb.sim           kirsch_top.sof          kirsch_top.uwp.W2017    kirsch_top.vhd.W2017    kirsch.uwp
+kirsch_spec.vhd         kirsch_synth_pkg.vhd    kirsch_tb.vhd           kirsch_top.uwp          kirsch_top.vhd          kirsch_unsynth_pkg.vhd  kirsch.vhd
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ c
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth --logic kirsch.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+       INFO: generic-gate       netlist         written to uw_tmp/kirsch_gate.vhd
+    INFO: generic-gate       area estimate   written to RPT/area_gate.rpt
+    INFO: logic-synthesis    netlist         written to uw_tmp/kirsch_logic.vhd
+    INFO: logic-synthesis    area estimate   written to RPT/area_logic.rpt
+    INFO: logic-synthesis    timing estimate written to RPT/timing_logic.rpt
+    INFO: --------------------------------------------------------------------------------
+    INFO: AREA = 344 cells (344 luts, 165 regs) (estimated by logic-synthesis)
+    INFO: Speed on Max 10 = 102 MHz,  9.74 ns (estimated by logic-synthesis)
+    INFO: --------------------------------------------------------------------------------
+    INFO: CRITICAL PATHS (slowest 5 paths, estimated by logic synthesis)
+    INFO: ..........Delays.........
+    INFO:  Total  Datapath  Routing          Source              Dest
+    INFO: ------  --------  -------   --------------------  ---------------------
+    INFO:   9.74     9.48     0.27    cycles(1)             reg3(13)/d
+    INFO:   9.74     9.47     0.27    cycles(0)             reg3(13)/d
+    INFO:   9.58     9.31     0.27    cycles(2)             reg3(13)/d
+    INFO:   9.00     8.73     0.27    cycles(3)             reg3(13)/d
+    INFO:   7.96     7.69     0.27    e(0)                  reg3(13)/d
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to lstep was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-sim --logic kirsch.uwp
+uw-sim /home/ece327/bin/uw-sim --logic kirsch.uwp
+    INFO: Using testbench        : kirsch_tb
+    INFO: Using design entity    : kirsch
+    INFO: Using simulation script: kirsch_tb.sim
+ y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-sim --logic kirsch.uwp --nogui
+uw-sim /home/ece327/bin/uw-sim --logic kirsch.uwp --nogui
+    INFO: Using testbench        : kirsch_tb
+    INFO: Using design entity    : kirsch
+    INFO: Using simulation script: kirsch_tb.sim
+
+
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.kirsch_synth_pkg(body)
+# Loading work.file_pkg(body)
+# Loading work.string_pkg(body)
+# Loading work.kirsch_unsynth_pkg(body)
+# Loading work.util(body)
+# Loading work.state_pkg
+# Loading work.kirsch_tb(main)#1
+# Loading work.kirsch(logic_shim)#1
+# Loading work.kirsch_logic(main)#1
+# Loading work.ram_dq_8_0(implementation)#1
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.ram_dq_8_1(implementation)#1
+# Loading work.ram_dq_8_2(implementation)#1
+# LOGIC_MODE
+# False
+# bubbles=3
+# runtime=5250880
+# ** Note: XXXXXXXXXXXX reading image from tests/test1.txt
+#    Time: 0 ns  Iteration: 0  Instance: /kirsch_tb
+# ** Note: latency begin wait
+#    Time: 41302 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41320 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41340 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41360 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41380 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41400 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41420 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41440 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41460 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency waiting
+#    Time: 41480 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: latency = 8
+#    Time: 41480 ns  Iteration: 1  Instance: /kirsch_tb
+# ** Note: XXXXXXXXXXXX sent image
+#    Time: 5243002 ns  Iteration: 0  Instance: /kirsch_tb
+# ** Note: XXXXXXXXXXXX got image
+#    Time: 5243160 ns  Iteration: 1  Instance: /kirsch_tb
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ reset
+Erase is control-H (^H).
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-sim -o kirsch.uwp
+usage: uw-sim [-h] [--debug DEBUG] [--gui] [--nogui] [-i] [-G GENERICS]
+              [-C CONFIGS] [-b BOARD] [-p] [-g] [-l] [-c] [-t] [-T SIM_PERIOD]
+              [--sim_script SIM_SCRIPT] [--design_arch DESIGN_ARCH]
+              [-L LIB_DIR] [--assertdebug] [--resolution TIME_RESOLUTION]
+              src_files [src_files ...]
+uw-sim: error: unrecognized arguments: -o
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth --opt kirsch.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+       INFO: generic-gate       netlist         written to uw_tmp/kirsch_gate.vh                                                                                                                       d
+    INFO: generic-gate       area estimate   written to RPT/area_gate.rpt
+    INFO: logic-synthesis    netlist         written to uw_tmp/kirsch_logic.vhd
+    INFO: logic-synthesis    area estimate   written to RPT/area_logic.rpt
+    INFO: logic-synthesis    timing estimate written to RPT/timing_logic.rpt
+    INFO: ----------------------------------------------------------------------                                                                                                                       ----------
+    INFO: AREA = 231 cells (231 luts, 169 regs) (estimated by logic-synthesis)
+    INFO: Speed on Stratix IV = 186 MHz,  5.37 ns (estimated by logic-synthesis)
+    INFO: ----------------------------------------------------------------------                                                                                                                       ----------
+    INFO: CRITICAL PATHS (slowest 5 paths, estimated by logic synthesis)
+    INFO: ..........Delays.........
+    INFO:  Total  Datapath  Routing          Source              Dest
+    INFO: ------  --------  -------   --------------------  --------------------                                                                                                                       -
+    INFO:   5.37     5.22     0.15    h(1)                  reg1_val(9)/d                                                                                                                              
+    INFO:   5.32     5.18     0.15    d(1)                  reg1_val(9)/d                                                                                                                              
+    INFO:   5.32     5.17     0.15    a(0)                  reg1_val(9)/d                                                                                                                              
+    INFO:   5.32     5.17     0.15    h(0)                  reg1_val(9)/d                                                                                                                              
+    INFO:   5.29     5.15     0.15    h(5)                  reg1_val(9)/d                                                                                                                              
+    INFO:
+    INFO: OPTIMALITY
+    INFO:              ..............latency...............
+    INFO:              =<  8cyc   9cyc  10cyc   11cyc   12cyc
+    INFO: optimality   =   805    765    728     692     659
+    INFO: latency                 = 8
+    INFO: optimality with latency = 805
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to STRATIXIV was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth -Gtest_num=2 --opt kirsc                                                                                                                       h.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+       INFO: generic-gate       netlist         written to uw_tmp/kirsch_gate.vh                                                                                                                       d
+    INFO: generic-gate       area estimate   written to RPT/area_gate.rpt
+    INFO: logic-synthesis    netlist         written to uw_tmp/kirsch_logic.vhd
+    INFO: logic-synthesis    area estimate   written to RPT/area_logic.rpt
+    INFO: logic-synthesis    timing estimate written to RPT/timing_logic.rpt
+    INFO: ----------------------------------------------------------------------                                                                                                                       ----------
+    INFO: AREA = 231 cells (231 luts, 169 regs) (estimated by logic-synthesis)
+    INFO: Speed on Stratix IV = 186 MHz,  5.37 ns (estimated by logic-synthesis)
+    INFO: ----------------------------------------------------------------------                                                                                                                       ----------
+    INFO: CRITICAL PATHS (slowest 5 paths, estimated by logic synthesis)
+    INFO: ..........Delays.........
+    INFO:  Total  Datapath  Routing          Source              Dest
+    INFO: ------  --------  -------   --------------------  --------------------                                                                                                                       -
+    INFO:   5.37     5.22     0.15    h(1)                  reg1_val(9)/d                                                                                                                              
+    INFO:   5.32     5.18     0.15    d(1)                  reg1_val(9)/d                                                                                                                              
+    INFO:   5.32     5.17     0.15    a(0)                  reg1_val(9)/d                                                                                                                              
+    INFO:   5.32     5.17     0.15    h(0)                  reg1_val(9)/d                                                                                                                              
+    INFO:   5.29     5.15     0.15    h(5)                  reg1_val(9)/d                                                                                                                              
+    INFO:
+    INFO: OPTIMALITY
+    INFO:              ..............latency...............
+    INFO:              =<  8cyc   9cyc  10cyc   11cyc   12cyc
+    INFO: optimality   =   805    765    728     692     659
+    INFO: latency                 = 8
+    INFO: optimality with latency = 805
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to STRATIXIV was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth -Gtest_num=3 --opt kirsch.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+       INFO: generic-gate       netlist         written to uw_tmp/kirsch_gate.vhd
+    INFO: generic-gate       area estimate   written to RPT/area_gate.rpt
+    INFO: logic-synthesis    netlist         written to uw_tmp/kirsch_logic.vhd
+    INFO: logic-synthesis    area estimate   written to RPT/area_logic.rpt
+    INFO: logic-synthesis    timing estimate written to RPT/timing_logic.rpt
+    INFO: --------------------------------------------------------------------------------
+    INFO: AREA = 231 cells (231 luts, 169 regs) (estimated by logic-synthesis)
+    INFO: Speed on Stratix IV = 186 MHz,  5.37 ns (estimated by logic-synthesis)
+    INFO: --------------------------------------------------------------------------------
+    INFO: CRITICAL PATHS (slowest 5 paths, estimated by logic synthesis)
+    INFO: ..........Delays.........
+    INFO:  Total  Datapath  Routing          Source              Dest
+    INFO: ------  --------  -------   --------------------  ---------------------
+    INFO:   5.37     5.22     0.15    h(1)                  reg1_val(9)/d
+    INFO:   5.32     5.18     0.15    d(1)                  reg1_val(9)/d
+    INFO:   5.32     5.17     0.15    a(0)                  reg1_val(9)/d
+    INFO:   5.32     5.17     0.15    h(0)                  reg1_val(9)/d
+    INFO:   5.29     5.15     0.15    h(5)                  reg1_val(9)/d
+    INFO:
+    INFO: OPTIMALITY
+    INFO:              ..............latency...............
+    INFO:              =<  8cyc   9cyc  10cyc   11cyc   12cyc
+    INFO: optimality   =   805    765    728     692     659
+    INFO: latency                 = 8
+    INFO: optimality with latency = 805
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to STRATIXIV was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth --logic kirsch.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+       INFO: generic-gate       netlist         written to uw_tmp/kirsch_gate.vhd
+    INFO: generic-gate       area estimate   written to RPT/area_gate.rpt
+    INFO: logic-synthesis    netlist         written to uw_tmp/kirsch_logic.vhd
+    INFO: logic-synthesis    area estimate   written to RPT/area_logic.rpt
+    INFO: logic-synthesis    timing estimate written to RPT/timing_logic.rpt
+    INFO: --------------------------------------------------------------------------------
+    INFO: AREA = 344 cells (344 luts, 165 regs) (estimated by logic-synthesis)
+    INFO: Speed on Max 10 = 102 MHz,  9.74 ns (estimated by logic-synthesis)
+    INFO: --------------------------------------------------------------------------------
+    INFO: CRITICAL PATHS (slowest 5 paths, estimated by logic synthesis)
+    INFO: ..........Delays.........
+    INFO:  Total  Datapath  Routing          Source              Dest
+    INFO: ------  --------  -------   --------------------  ---------------------
+    INFO:   9.74     9.48     0.27    cycles(1)             reg3(13)/d
+    INFO:   9.74     9.47     0.27    cycles(0)             reg3(13)/d
+    INFO:   9.58     9.31     0.27    cycles(2)             reg3(13)/d
+    INFO:   9.00     8.73     0.27    cycles(3)             reg3(13)/d
+    INFO:   7.96     7.69     0.27    e(0)                  reg3(13)/d
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to lstep was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$  uw-synth --chip kirsch_top.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "syn_fifo.vhd"
+INFO: Analyzing "kirsch.vhd"
+INFO: Analyzing "components.vhd"
+INFO: Analyzing "kirsch_top.vhd"
+Warning: "kirsch_top.vhd", line 34: Input port sw has never been used.
+Warning: "kirsch_top.vhd", line 35: Input port pb[3:1] has never been used.
+Warning: "kirsch_top.vhd", line 40: Output port led has never been assigned a value.
+Warning: "kirsch_top.vhd", line 56: signal k_o_col has never been used.
+Warning: "kirsch_top.vhd", line 79: signal pb0_r_edge has never been used.
+Warning: "kirsch_top.vhd", line 82: signal wb_full has never been used.
+Warning: "kirsch_top.vhd", line 86: signal rb_full has never been used.
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "syn_fifo.vhd"
+INFO: Analyzing "kirsch.vhd"
+INFO: Analyzing "components.vhd"
+INFO: Analyzing "kirsch_top.vhd"
+Warning: "kirsch_top.vhd", line 34: Input port sw has never been used.
+Warning: "kirsch_top.vhd", line 35: Input port pb[3:1] has never been used.
+Warning: "kirsch_top.vhd", line 40: Output port led has never been assigned a value.
+Warning: "kirsch_top.vhd", line 56: signal k_o_col has never been used.
+Warning: "kirsch_top.vhd", line 79: signal pb0_r_edge has never been used.
+Warning: "kirsch_top.vhd", line 82: signal wb_full has never been used.
+Warning: "kirsch_top.vhd", line 86: signal rb_full has never been used.
+       INFO: generic-gate       netlist         written to uw_tmp/kirsch_top_gate.vhd
+    INFO: generic-gate       area estimate   written to RPT/area_gate.rpt
+    INFO: logic-synthesis    netlist         written to uw_tmp/kirsch_top_logic.vhd
+    INFO: logic-synthesis    area estimate   written to RPT/area_logic.rpt
+    INFO: logic-synthesis    timing estimate written to RPT/timing_logic.rpt
+    INFO: --------------------------------------------------------------------------------
+    INFO: AREA = 599 cells (599 luts, 344 regs) (estimated by logic-synthesis)
+    INFO: Speed on Max 10 = 101 MHz,  9.85 ns (estimated by logic-synthesis)
+    INFO: --------------------------------------------------------------------------------
+    INFO: CRITICAL PATHS (slowest 5 paths, estimated by logic synthesis)
+    INFO: ..........Delays.........
+    INFO:  Total  Datapath  Routing          Source              Dest
+    INFO: ------  --------  -------   --------------------  ---------------------
+    INFO:   9.85     9.58     0.27    u_kirsch_...cycles(1) u_kirsch_...eg3(13)/d
+    INFO:   9.85     9.58     0.27    u_kirsch_...cycles(0) u_kirsch_...eg3(13)/d
+    INFO:   9.68     9.41     0.27    u_kirsch_...cycles(2) u_kirsch_...eg3(13)/d
+    INFO:   9.10     8.83     0.27    u_kirsch_...cycles(3) u_kirsch_...eg3(13)/d
+    INFO:   7.98     7.71     0.27    u_kirsch_reg_f(0)     u_kirsch_...eg3(13)/d
+    INFO: Starting QUARTUS for physical synthesis
+    INFO: map... fit... tan... asm... eda...
+     INFO: generic-gate       netlist         written to uw_tmp/kirsch_top_gate.vhd
+    INFO: generic-gate       area estimate   written to RPT/area_gate.rpt
+    INFO: logic-synthesis    netlist         written to uw_tmp/kirsch_top_logic.vhd
+    INFO: logic-synthesis    area estimate   written to RPT/area_logic.rpt
+    INFO: logic-synthesis    timing estimate written to RPT/timing_logic.rpt
+    INFO: chip               netlist         written to uw_tmp/kirsch_top_chip.vhd
+    INFO: chip               area estimate   written to RPT/area_chip.rpt
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to lstep was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ history | grep synth
+   26  uw-synth kirsch.uwp
+   29  uw-synth kirsch.uwp
+   39  uw-synth kirsch.uwp
+   97  uw-synth kirsch.uwp
+  104  uw-synth kirsch.uwp
+  116  uw-synth kirsch.uwp
+  117  uw-synth kirsch.uwp
+  124  uw-synth --chip kirsch_top.uwp
+  135  uw-synth --chip kirsch_top.uwp
+  139  uw-synth --chip kirsch_top.uwp
+  145  uw-synth --chip kirsch_top.uwp
+  155  uw-synth kirsch.uwp
+  250  uw-synth kirsch.vhd
+  252  uw-synth kirsch.vhd
+  253  uw-synth kirsch.uwp
+  254  uw-synth kirsch.vhd
+  256  uw-synth kirsch.uwp
+  259  uw-synth kirsch.uwp
+  261  uw-synth kirsch.uwp
+  264  uw-synth kirsch.uwp
+  266  uw-synth kirsch.uwp
+  292  uw-synth kirsch.uwp
+  307  uw-synth kirsch.vhd
+  309  uw-synth kirsch.vhd
+  311  uw-synth kirsch.vhd
+  312  uw-synth kirsch.uwp
+  314  uw-synth kirsch.uwp
+  316  uw-synth kirsch.uwp
+  318  uw-synth kirsch.uwp
+  320  uw-synth kirsch.uwp
+  322  uw-synth kirsch.uwp
+  332  uw-synth kirsch.uwp
+  335  uw-synth kirsch.vhd
+  336  uw-synth kirsch.uwp
+  343  uw-synth kirsch.uwp
+  510  uw-synth --chip kirsch_top.uwp
+  511  uw-synth --chip kirsch_top.uwp
+  515  uw-synth --logic kirsch.uwp
+  520  uw-synth --opt kirsch.uwp
+  521  uw-synth -Gtest_num=2 --opt kirsch.uwp
+  522  uw-synth -Gtest_num=3 --opt kirsch.uwp
+  523  uw-synth --logic kirsch.uwp
+  524   uw-synth --chip kirsch_top.uwp
+  525  history | grep synth
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth kirsch.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+INFO: Analyzing "util.vhd"
+INFO: Analyzing "kirsch_synth_pkg.vhd"
+INFO: Analyzing "mem.vhd"
+INFO: Analyzing "kirsch.vhd"
+     INFO: generic-gate       netlist         written to uw_tmp/kirsch_gate.vhd
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to MODGEN was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth kirsch.uwp --gui
+    INFO: Starting PRECISION_RTL for logic synthesis
+^C    INFO: Keyboard interrupt when running `precision -newgui -file uw_tmp/uw-gate-synth-precision_rtl.tcl'
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth kirsch.vhd --gui
+    INFO: Starting PRECISION_RTL for logic synthesis
+Error: Failed to open design unit file "uw_tmp/kirsch_gate.vhd" in read mode.
+No such file or directory. (errno = ENOENT)
+ERROR: Failure (exit code) when running `vcom -2008 -quiet -work work-msim  -suppress vcom-1141 uw_tmp/kirsch_gate.vhd'
+ ERROR: Failure (error grep) when running `uw-shim kirsch GATE_MODE MODGEN  kirsch.vhd'
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth kirsch.uwp --gui
+    INFO: Starting PRECISION_RTL for logic synthesis
+     INFO: generic-gate       netlist         written to uw_tmp/kirsch_gate.vhd
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to MODGEN was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth kirsch_top..uwp --gui
+ERROR: file_to_proj: Could not open file kirsch_top..uwp
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth kirsch_top.uwp --gui
+    INFO: Starting PRECISION_RTL for logic synthesis
+     INFO: generic-gate       netlist         written to uw_tmp/kirsch_top_gate.vhd
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to MODGEN was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth kirsch.uwp --gui
+    INFO: Starting PRECISION_RTL for logic synthesis
+^C    INFO: Keyboard interrupt when running `precision -newgui -file uw_tmp/uw-gate-synth-precision_rtl.tcl'
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth kirsch.uwp --gui
+    INFO: Starting PRECISION_RTL for logic synthesis
+     INFO: generic-gate       netlist         written to uw_tmp/kirsch_gate.vhd
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to MODGEN was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth --gui --gates kirsch.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+^C    INFO: Keyboard interrupt when running `precision -newgui -file uw_tmp/uw-gate-synth-precision_rtl.tcl'
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ reset
+Erase is control-H (^H).
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ ll
+total 1629
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera_mf
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera_primitives
+-rw-r--r-- 1 y433wu users  17189 Mar 23 21:30 components.vhd
+-rw-r--r-- 1 y433wu users 850996 Mar 23 21:30 dfd-name.pdf
+-rw-r--r-- 1 y433wu users     43 Mar 27 20:07 doa_test.txt
+-rwxr-xr-x 1 y433wu users   1382 Mar 27 17:05 edge_calculation.py
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 fiftyfivenm
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 fiftyfivenm-enc
+-rw-r--r-- 1 y433wu users    387 Mar 23 21:30 kirsch_spec.uwp
+-rw-r--r-- 1 y433wu users   6573 Mar 23 21:30 kirsch_spec.vhd
+-rwxr--r-- 1 y433wu users 980992 Mar 23 21:30 kirsch_spec.xls
+-rw-r--r-- 1 y433wu users   3063 Mar 23 21:30 kirsch_synth_pkg.vhd
+-rw-r--r-- 1 y433wu users   2155 Mar 23 21:30 kirsch_tb.sim
+-rw-r--r-- 1 y433wu users   7861 Mar 23 21:30 kirsch_tb.vhd
+-rw-r--r-- 1 y433wu users 728516 Mar 27 20:15 kirsch_top.sof
+-rw-r--r-- 1 y433wu users    258 Mar 23 21:30 kirsch_top.uwp
+-rw-r--r-- 1 y433wu users    228 Mar 23 21:30 kirsch_top.uwp.W2017
+-rw-r--r-- 1 y433wu users   9367 Mar 23 21:30 kirsch_top.vhd
+-rw-r--r-- 1 y433wu users   6366 Mar 23 21:30 kirsch_top.vhd.W2017
+-rw-r--r-- 1 y433wu users   6973 Mar 23 21:30 kirsch_unsynth_pkg.vhd
+-rw-r--r-- 1 y433wu users    330 Mar 23 21:30 kirsch.uwp
+-rw-r--r-- 1 y433wu users   7988 Mar 27 17:13 kirsch.vhd
+drwxr-xr-x 2 y433wu users      7 Mar 26 20:22 LOG
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 lpm
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 maxv
+-rw-r--r-- 1 y433wu users   2125 Mar 23 21:30 mem.vhd
+-rw-r--r-- 1 y433wu users  92754 Mar 27 20:58 modelsim.ini
+drwxr-xr-x 2 y433wu users      3 Mar 26 14:08 modgen_sim
+-rw-r--r-- 1 y433wu users    344 Mar 23 21:30 radix.sim
+drwxr-xr-x 2 y433wu users      4 Mar 27 20:58 RPT
+drwxr-xr-x 2 y433wu users      3 Mar 27 20:10 stratixiv
+-rw-r--r-- 1 y433wu users   1424 Mar 23 21:30 string_pkg.vhd
+-rw-r--r-- 1 y433wu users   3332 Mar 23 21:30 syn_fifo.vhd
+-rwxr-xr-x 1 y433wu users    390 Mar 27 16:18 test_helper.sh
+-rwxr--r-- 1 y433wu users     36 Mar 26 20:53 test_input.txt
+drwxr-xr-x 3 y433wu users     44 Mar 27 17:15 tests
+-rwxr-xr-x 1 y433wu users    428 Mar 27 16:23 test.sh
+-rw-r--r-- 1 y433wu users   3956 Mar 27 20:07 transcript
+-rw-r--r-- 1 y433wu users    697 Mar 23 21:30 util.vhd
+drwxr-xr-x 7 y433wu users    113 Mar 27 20:59 uw_tmp
+-rw-r--r-- 1 y433wu users    104 Mar 27 17:03 vish_stacktrace.vstf
+drwxr-xr-x 8 y433wu users     14 Mar 27 20:58 work-msim
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ uw-synth --gui kirsch.uwp
+    INFO: Starting PRECISION_RTL for logic synthesis
+     INFO: generic-gate       netlist         written to uw_tmp/kirsch_gate.vhd
+    INFO:
+    INFO: ***********************************************
+    INFO: *
+    INFO: * uw-synth to MODGEN was successful
+    INFO: * log file stored in LOG/uw-synth.log
+    INFO: *
+    INFO: ***********************************************
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ vim kirsch.uwp
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ vim kirsch.vhd
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ ll
+total 1629
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera_mf
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 altera_primitives
+-rw-r--r-- 1 y433wu users  17189 Mar 23 21:30 components.vhd
+-rw-r--r-- 1 y433wu users 850996 Mar 23 21:30 dfd-name.pdf
+-rw-r--r-- 1 y433wu users     43 Mar 27 20:07 doa_test.txt
+-rwxr-xr-x 1 y433wu users   1382 Mar 27 17:05 edge_calculation.py
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 fiftyfivenm
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 fiftyfivenm-enc
+-rw-r--r-- 1 y433wu users    387 Mar 23 21:30 kirsch_spec.uwp
+-rw-r--r-- 1 y433wu users   6573 Mar 23 21:30 kirsch_spec.vhd
+-rwxr--r-- 1 y433wu users 980992 Mar 23 21:30 kirsch_spec.xls
+-rw-r--r-- 1 y433wu users   3063 Mar 23 21:30 kirsch_synth_pkg.vhd
+-rw-r--r-- 1 y433wu users   2155 Mar 23 21:30 kirsch_tb.sim
+-rw-r--r-- 1 y433wu users   7861 Mar 23 21:30 kirsch_tb.vhd
+-rw-r--r-- 1 y433wu users 728516 Mar 27 20:15 kirsch_top.sof
+-rw-r--r-- 1 y433wu users    258 Mar 23 21:30 kirsch_top.uwp
+-rw-r--r-- 1 y433wu users    228 Mar 23 21:30 kirsch_top.uwp.W2017
+-rw-r--r-- 1 y433wu users   9367 Mar 23 21:30 kirsch_top.vhd
+-rw-r--r-- 1 y433wu users   6366 Mar 23 21:30 kirsch_top.vhd.W2017
+-rw-r--r-- 1 y433wu users   6973 Mar 23 21:30 kirsch_unsynth_pkg.vhd
+-rw-r--r-- 1 y433wu users    330 Mar 23 21:30 kirsch.uwp
+-rw-r--r-- 1 y433wu users   7988 Mar 27 17:13 kirsch.vhd
+drwxr-xr-x 2 y433wu users      7 Mar 26 20:22 LOG
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 lpm
+drwxr-xr-x 2 y433wu users      3 Mar 26 13:55 maxv
+-rw-r--r-- 1 y433wu users   2125 Mar 23 21:30 mem.vhd
+-rw-r--r-- 1 y433wu users  92754 Mar 27 21:36 modelsim.ini
+drwxr-xr-x 2 y433wu users      3 Mar 26 14:08 modgen_sim
+-rw-r--r-- 1 y433wu users    344 Mar 23 21:30 radix.sim
+drwxr-xr-x 2 y433wu users      4 Mar 27 21:17 RPT
+drwxr-xr-x 2 y433wu users      3 Mar 27 20:10 stratixiv
+-rw-r--r-- 1 y433wu users   1424 Mar 23 21:30 string_pkg.vhd
+-rw-r--r-- 1 y433wu users   3332 Mar 23 21:30 syn_fifo.vhd
+-rwxr-xr-x 1 y433wu users    390 Mar 27 16:18 test_helper.sh
+-rwxr--r-- 1 y433wu users     36 Mar 26 20:53 test_input.txt
+drwxr-xr-x 3 y433wu users     44 Mar 27 17:15 tests
+-rwxr-xr-x 1 y433wu users    428 Mar 27 16:23 test.sh
+-rw-r--r-- 1 y433wu users   3956 Mar 27 20:07 transcript
+-rw-r--r-- 1 y433wu users    697 Mar 23 21:30 util.vhd
+drwxr-xr-x 7 y433wu users    114 Mar 27 21:36 uw_tmp
+-rw-r--r-- 1 y433wu users    104 Mar 27 17:03 vish_stacktrace.vstf
+drwxr-xr-x 8 y433wu users     14 Mar 27 21:36 work-msim
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ vim kirsch_synth_pkg.vhd
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$ vim kirsch.vhd
+y433wu@eceubuntu2:~/ece327/BME351/kirsch_proj$
