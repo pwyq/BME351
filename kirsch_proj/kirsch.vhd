@@ -92,7 +92,7 @@ ARCHITECTURE main of kirsch IS
     SIGNAL add1 : UNSIGNED(8 DOWNTO 0);
     SIGNAL max1 : maxOneStruct;
     SIGNAL add2 : UNSIGNED(9 DOWNTO 0);
-    SIGNAL reg1 : maxTwoStruct;
+    SIGNAL reg1 : maxOneStruct;
     SIGNAL reg2 : UNSIGNED(8 DOWNTO 0);
 
     -------- Stage 2 Signals --------
@@ -207,7 +207,7 @@ BEGIN
     updateStageOne : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
         IF (cycles(0) = '1' OR cycles(1) = '1' OR cycles(2) = '1' OR cycles(3) = '1') THEN
-            reg1.val <= resize(unsigned(max1.val), 13); --resize(max1.val, 13);
+            reg1.val <= max1.val;
             reg1.dir <= max1.dir;
         END IF;
     END PROCESS;
