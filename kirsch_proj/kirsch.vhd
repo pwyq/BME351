@@ -204,14 +204,23 @@ BEGIN
             maxOperator1(e, dir_s, h, dir_sw) WHEN (cycles(3) = '1') ELSE
             maxOperator1("00000000", "000", "00000000", "000");
 
-    add2 <= resize(add1, 10) + resize(UNSIGNED(max1.val), 10);
+    -- add2 <= resize(add1, 10) + resize(UNSIGNED(max1.val), 10);
+    
 
     updateStageOne : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
-        reg1.val <= resize(add2, 13);
-        reg1.dir <= max1.dir;
+        IF (cycles(0) = '1' OR cycles(1) = '1' OR cycles(2) = '1' OR cycles(3) = '1') THEN
+            reg1.val <= resize(unsigned(max1.val), 13); --resize(max1.val, 13);
+            reg1.dir <= max1.dir;
+        END IF;
     END PROCESS;
 
+    updateReg2: PROCESS BEGIN
+        WAIT UNTIL RISING_EDGE(clk);
+        IF (cycles(0) = '1' OR cycles(1) = '1' OR cycles(2) = '1' OR cycles(3) = '1') THEN
+            reg2 <= add1;
+        END IF;
+    END PROCESS;
 -- --------------------------------
 -- Stage 2
 -- --------------------------------
@@ -219,12 +228,12 @@ BEGIN
             resize(reg3, 14) + resize(SHIFT_LEFT(reg3, 1), 14) WHEN (cycles(4) = '1') ELSE
             resize(add1, 14) + resize(reg3, 14);
 
-    updateReg2: PROCESS BEGIN
-        WAIT UNTIL RISING_EDGE(clk);
-        IF (cycles(0) = '1') THEN
-            reg2 <= add1;
-        END IF;
-    END PROCESS;
+    -- updateReg2: PROCESS BEGIN
+    --     WAIT UNTIL RISING_EDGE(clk);
+    --     -- IF (cycles(0) = '1') THEN
+    --         reg2 <= add1;
+    --     -- END IF;
+    -- END PROCESS;
 
     updateReg3 : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
@@ -235,18 +244,21 @@ BEGIN
 -- --------------------------------
 -- Stage 3
 -- --------------------------------
-    max2 <= maxOperator2(reg4.val, reg4.dir, reg1.val, reg1.dir);
+    add2 <= resize(reg2, 10) + resize(UNSIGNED(reg1.val), 10);
+    max2 <= maxOperator2(reg4.val, reg4.dir, resize(add2, 13), reg1.dir);
 
     updateStageThree : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
             IF (cycles(1) = '1') THEN
-                reg4.val <= resize(reg1.val, 13);
+                reg4.val <= resize(add2, 13);
                 reg4.dir <= reg1.dir;
             ELSIF (cycles(4) = '1') THEN
                 reg4.val <= SHIFT_LEFT(max2.val, 3);
                 reg4.dir <= max2.dir;
                 resultDir <= max2.dir;
             ELSE
+                -- reg4.val <= resize(add2, 13);
+                -- reg4.dir <= reg1.dir;
                 reg4.val <= max2.val;
                 reg4.dir <= max2.dir;
             END IF;
