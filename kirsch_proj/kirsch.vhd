@@ -203,10 +203,7 @@ BEGIN
             maxOperator1(c, dir_e, f, dir_se) WHEN (cycles(2) = '1') ELSE
             maxOperator1(e, dir_s, h, dir_sw) WHEN (cycles(3) = '1') ELSE
             maxOperator1("00000000", "000", "00000000", "000");
-
-    -- add2 <= resize(add1, 10) + resize(UNSIGNED(max1.val), 10);
     
-
     updateStageOne : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
         IF (cycles(0) = '1' OR cycles(1) = '1' OR cycles(2) = '1' OR cycles(3) = '1') THEN
@@ -227,14 +224,6 @@ BEGIN
     add3 <= resize(reg2, 14) + resize(add1, 14) WHEN (cycles(1) = '1') ELSE
             resize(reg3, 14) + resize(SHIFT_LEFT(reg3, 1), 14) WHEN (cycles(4) = '1') ELSE
             resize(add1, 14) + resize(reg3, 14);
-
-    -- updateReg2: PROCESS BEGIN
-    --     WAIT UNTIL RISING_EDGE(clk);
-    --     -- IF (cycles(0) = '1') THEN
-    --         reg2 <= add1;
-    --     -- END IF;
-    -- END PROCESS;
-
     updateReg3 : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
         on_stage2 <= on_stage1;
@@ -257,8 +246,6 @@ BEGIN
                 reg4.dir <= max2.dir;
                 resultDir <= max2.dir;
             ELSE
-                -- reg4.val <= resize(add2, 13);
-                -- reg4.dir <= reg1.dir;
                 reg4.val <= max2.val;
                 reg4.dir <= max2.dir;
             END IF;
