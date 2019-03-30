@@ -1,0 +1,27 @@
+-- POST-SYNTHESIS TIMING REPORTS ARE ESTIMATES AND SHOULD NOT BE RELIED ON TO MAKE QoR DECISIONS. For accurate timing information, please run place-and-route (P&R) and review P&R generated timing reports.
+
+================================================================================================
+                   Clock Frequency Report
+
+	Domain                  Clock Name                            Min Period (Freq)             Required Period (Freq)
+	------                  ----------                            -----------------             ----------------------
+	xmplr_ClockDomain_clk   clk                                   4.994 (200.240 MHz)           20.000 (50.000 MHz)
+
+Setup Slack Path Summary
+
+               Data                                                     Data
+       Setup   Path   Source  Dest.                                     End 
+Index  Slack   Delay  Clock   Clock   Data Start Pin     Data End Pin   Edge
+-----  ------  -----  ------  -----  -----------------  --------------  ----
+  1    15.006  4.845  clk     clk    reg_cycles(1)/clk  reg_reg3(13)/d  Rise
+  2    15.030  4.821  clk     clk    reg_c(0)/clk       reg_reg3(13)/d  Rise
+  3    15.040  4.811  clk     clk    reg_e(0)/clk       reg_reg3(13)/d  Rise
+  4    15.051  4.800  clk     clk    reg_b(0)/clk       reg_reg3(13)/d  Rise
+  5    15.061  4.790  clk     clk    reg_d(0)/clk       reg_reg3(13)/d  Rise
+
+-- Device: Altera - Stratix IV : EP4SGX70HF35M : 3
+-- CTE report summary..
+                  CTE Report Summary
+
+Analyzing setup constraint violations 
+End CTE Report Summary ..... CPU Time Used: 0 sec.
