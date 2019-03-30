@@ -92,7 +92,7 @@ ARCHITECTURE main of kirsch IS
     SIGNAL add1 : UNSIGNED(8 DOWNTO 0);
     SIGNAL max1 : maxOneStruct;
     SIGNAL add2 : UNSIGNED(9 DOWNTO 0);
-    SIGNAL reg1 : maxTwoStruct;
+    SIGNAL reg1 : maxOneStruct;
     SIGNAL reg2 : UNSIGNED(8 DOWNTO 0);
 
     -------- Stage 2 Signals --------
@@ -203,29 +203,27 @@ BEGIN
             maxOperator1(c, dir_e, f, dir_se) WHEN (cycles(2) = '1') ELSE
             maxOperator1(e, dir_s, h, dir_sw) WHEN (cycles(3) = '1') ELSE
             maxOperator1("00000000", "000", "00000000", "000");
-
-    add2 <= resize(add1, 10) + resize(UNSIGNED(max1.val), 10);
-
+    
     updateStageOne : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
-        reg1.val <= resize(add2, 13);
-        reg1.dir <= max1.dir;
+        IF (cycles(0) = '1' OR cycles(1) = '1' OR cycles(2) = '1' OR cycles(3) = '1') THEN
+            reg1.val <= max1.val;
+            reg1.dir <= max1.dir;
+        END IF;
     END PROCESS;
 
+    updateReg2: PROCESS BEGIN
+        WAIT UNTIL RISING_EDGE(clk);
+        IF (cycles(0) = '1' OR cycles(1) = '1' OR cycles(2) = '1' OR cycles(3) = '1') THEN
+            reg2 <= add1;
+        END IF;
+    END PROCESS;
 -- --------------------------------
 -- Stage 2
 -- --------------------------------
     add3 <= resize(reg2, 14) + resize(add1, 14) WHEN (cycles(1) = '1') ELSE
             resize(reg3, 14) + resize(SHIFT_LEFT(reg3, 1), 14) WHEN (cycles(4) = '1') ELSE
             resize(add1, 14) + resize(reg3, 14);
-
-    updateReg2: PROCESS BEGIN
-        WAIT UNTIL RISING_EDGE(clk);
-        IF (cycles(0) = '1') THEN
-            reg2 <= add1;
-        END IF;
-    END PROCESS;
-
     updateReg3 : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
         on_stage2 <= on_stage1;
@@ -235,12 +233,13 @@ BEGIN
 -- --------------------------------
 -- Stage 3
 -- --------------------------------
-    max2 <= maxOperator2(reg4.val, reg4.dir, reg1.val, reg1.dir);
+    add2 <= resize(reg2, 10) + resize(UNSIGNED(reg1.val), 10);
+    max2 <= maxOperator2(reg4.val, reg4.dir, resize(add2, 13), reg1.dir);
 
     updateStageThree : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
             IF (cycles(1) = '1') THEN
-                reg4.val <= resize(reg1.val, 13);
+                reg4.val <= resize(add2, 13);
                 reg4.dir <= reg1.dir;
             ELSIF (cycles(4) = '1') THEN
                 reg4.val <= SHIFT_LEFT(max2.val, 3);
