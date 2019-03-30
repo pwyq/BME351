@@ -91,7 +91,6 @@ ARCHITECTURE main of kirsch IS
     -------- Stage 1 Signals --------
     SIGNAL add1 : UNSIGNED(8 DOWNTO 0);
     SIGNAL max1 : maxOneStruct;
-    SIGNAL add2 : UNSIGNED(9 DOWNTO 0);
     SIGNAL reg1 : maxOneStruct;
     SIGNAL reg2 : UNSIGNED(8 DOWNTO 0);
 
@@ -100,8 +99,9 @@ ARCHITECTURE main of kirsch IS
     SIGNAL reg3 : UNSIGNED(13 DOWNTO 0);
 
     -------- Stage 3 Signals --------
-    SIGNAL reg4 : maxTwoStruct;
+    SIGNAL add2 : UNSIGNED(9 DOWNTO 0);
     SIGNAL max2 : maxTwoStruct;
+    SIGNAL reg4 : maxTwoStruct;
 
     -------- Stage 4 Signals --------
     SIGNAL sub1 : SIGNED(13 DOWNTO 0);
@@ -109,6 +109,7 @@ ARCHITECTURE main of kirsch IS
     SIGNAL validEdge : STD_LOGIC;
     SIGNAL resultDir : direction_ty;
     SIGNAL edgeFound : STD_LOGIC;
+
 BEGIN
 -- --------------------------------
 -- Preprocessing
@@ -192,10 +193,10 @@ BEGIN
 -- --------------------------------
 -- Stage 1
 -- --------------------------------
-    add1 <= resize(UNSIGNED(a), 9) + resize(UNSIGNED(h), 9) WHEN (cycles(0) = '1') ELSE
-            resize(UNSIGNED(b), 9) + resize(UNSIGNED(c), 9) WHEN (cycles(1) = '1') ELSE
-            resize(UNSIGNED(d), 9) + resize(UNSIGNED(e), 9) WHEN (cycles(2) = '1') ELSE
-            resize(UNSIGNED(f), 9) + resize(UNSIGNED(g), 9) WHEN (cycles(3) = '1') ELSE
+    add1 <= RESIZE(UNSIGNED(a), 9) + RESIZE(UNSIGNED(h), 9) WHEN (cycles(0) = '1') ELSE
+            RESIZE(UNSIGNED(b), 9) + RESIZE(UNSIGNED(c), 9) WHEN (cycles(1) = '1') ELSE
+            RESIZE(UNSIGNED(d), 9) + RESIZE(UNSIGNED(e), 9) WHEN (cycles(2) = '1') ELSE
+            RESIZE(UNSIGNED(f), 9) + RESIZE(UNSIGNED(g), 9) WHEN (cycles(3) = '1') ELSE
             to_unsigned(0, 9);
 
     max1 <= maxOperator1(g, dir_w, b, dir_nw) WHEN (cycles(0) = '1') ELSE
@@ -218,12 +219,13 @@ BEGIN
             reg2 <= add1;
         END IF;
     END PROCESS;
+
 -- --------------------------------
 -- Stage 2
 -- --------------------------------
-    add3 <= resize(reg2, 14) + resize(add1, 14) WHEN (cycles(1) = '1') ELSE
-            resize(reg3, 14) + resize(SHIFT_LEFT(reg3, 1), 14) WHEN (cycles(4) = '1') ELSE
-            resize(add1, 14) + resize(reg3, 14);
+    add3 <= RESIZE(reg2, 14) + RESIZE(add1, 14) WHEN (cycles(1) = '1') ELSE
+            RESIZE(reg3, 14) + RESIZE(SHIFT_LEFT(reg3, 1), 14) WHEN (cycles(4) = '1') ELSE
+            RESIZE(add1, 14) + RESIZE(reg3, 14);
     updateReg3 : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
         on_stage2 <= on_stage1;
@@ -233,13 +235,13 @@ BEGIN
 -- --------------------------------
 -- Stage 3
 -- --------------------------------
-    add2 <= resize(reg2, 10) + resize(UNSIGNED(reg1.val), 10);
-    max2 <= maxOperator2(reg4.val, reg4.dir, resize(add2, 13), reg1.dir);
+    add2 <= RESIZE(reg2, 10) + RESIZE(UNSIGNED(reg1.val), 10);
+    max2 <= maxOperator2(reg4.val, reg4.dir, RESIZE(add2, 13), reg1.dir);
 
     updateStageThree : PROCESS BEGIN
         WAIT UNTIL RISING_EDGE(clk);
             IF (cycles(1) = '1') THEN
-                reg4.val <= resize(add2, 13);
+                reg4.val <= RESIZE(add2, 13);
                 reg4.dir <= reg1.dir;
             ELSIF (cycles(4) = '1') THEN
                 reg4.val <= SHIFT_LEFT(max2.val, 3);
@@ -256,7 +258,7 @@ BEGIN
 -- --------------------------------
 -- Stage 4
 -- --------------------------------
-    sub1 <= SIGNED(resize(reg4.val, 14)) - SIGNED(resize(reg3, 14));
+    sub1 <= SIGNED(RESIZE(reg4.val, 14)) - SIGNED(RESIZE(reg3, 14));
     edgeFound <= '1' WHEN (reg5 > 383) ELSE '0';
 
     updateResult : PROCESS BEGIN
